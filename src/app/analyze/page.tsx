@@ -76,8 +76,8 @@ export default function AnalyzePage() {
     <div className="relative min-h-screen overflow-hidden mesh-gradient">
       {/* Mesh blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-1/4 -right-1/4 w-[500px] h-[500px] rounded-full bg-purple-400/10 blur-3xl animate-[mesh-move-2_25s_ease-in-out_infinite]" />
-        <div className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-blue-400/10 blur-3xl animate-[mesh-move_20s_ease-in-out_infinite]" />
+        <div className="absolute -top-1/4 -right-1/4 w-[500px] h-[500px] rounded-full bg-purple-400/[0.03] blur-3xl animate-[mesh-move-2_25s_ease-in-out_infinite]" />
+        <div className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-blue-400/[0.03] blur-3xl animate-[mesh-move_20s_ease-in-out_infinite]" />
       </div>
 
       <nav className="relative z-10 flex items-center justify-between px-6 py-5 max-w-7xl mx-auto">
@@ -117,7 +117,7 @@ export default function AnalyzePage() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
             >
-              <div className="glass-strong rounded-2xl p-2 shadow-xl shadow-indigo-500/5">
+              <div className="bg-white rounded-2xl p-3 shadow-lg shadow-slate-200/50 border border-slate-100">
                 <div className="flex flex-col sm:flex-row gap-2">
                   <div className="relative flex-1">
                     <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />

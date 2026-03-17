@@ -145,11 +145,11 @@ export default function LandingPage() {
 
   return (
     <div className="relative min-h-screen overflow-hidden mesh-gradient">
-      {/* Mesh gradient blobs */}
+      {/* Subtle background blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-blue-400/10 blur-3xl animate-[mesh-move_20s_ease-in-out_infinite]" />
-        <div className="absolute -top-1/4 -right-1/4 w-[500px] h-[500px] rounded-full bg-purple-400/10 blur-3xl animate-[mesh-move-2_25s_ease-in-out_infinite]" />
-        <div className="absolute -bottom-1/4 left-1/3 w-[700px] h-[700px] rounded-full bg-pink-400/8 blur-3xl animate-[mesh-move-3_30s_ease-in-out_infinite]" />
+        <div className="absolute -top-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-blue-400/[0.03] blur-3xl animate-[mesh-move_20s_ease-in-out_infinite]" />
+        <div className="absolute -top-1/4 -right-1/4 w-[500px] h-[500px] rounded-full bg-purple-400/[0.03] blur-3xl animate-[mesh-move-2_25s_ease-in-out_infinite]" />
+        <div className="absolute -bottom-1/4 left-1/3 w-[700px] h-[700px] rounded-full bg-pink-400/[0.02] blur-3xl animate-[mesh-move-3_30s_ease-in-out_infinite]" />
       </div>
 
       {/* Nav */}
@@ -207,21 +207,21 @@ export default function LandingPage() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="w-full max-w-2xl"
         >
-          <div className="glass-strong rounded-2xl p-2 shadow-xl shadow-indigo-500/5">
-            <div className="flex flex-col sm:flex-row gap-2">
+          <div className="bg-white rounded-2xl p-3 shadow-lg shadow-slate-200/50 border border-slate-100">
+            <div className="flex flex-col sm:flex-row gap-3">
               <div className="relative flex-1">
-                <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Globe className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <Input
                   type="text"
                   placeholder="wildberries.ru"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-                  className="pl-12 h-14 bg-white/50 border-0 text-lg rounded-xl focus-visible:ring-2 focus-visible:ring-indigo-500/30"
+                  className="pl-14 h-16 bg-slate-50/50 border-0 text-xl rounded-xl focus-visible:ring-2 focus-visible:ring-indigo-500/30"
                 />
               </div>
               <ShimmerButton
-                className="h-14 px-8 rounded-xl"
+                className="h-16 px-10 rounded-xl"
                 shimmerSize="0.06em"
                 onClick={handleSubmit}
                 disabled={isSubmitting}
@@ -318,7 +318,7 @@ export default function LandingPage() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
               className="tilt-card"
             >
-              <div className={`glass rounded-2xl p-8 h-full ${feature.bg} hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-300`}>
+              <div className={`bg-white rounded-2xl p-8 h-full border border-slate-100 shadow-sm hover:shadow-md transition-all duration-200`}>
                 <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-5 shadow-lg`}>
                   <feature.icon className="w-6 h-6 text-white" />
                 </div>
@@ -349,7 +349,7 @@ export default function LandingPage() {
               transition={{ duration: 0.5, delay: i * 0.15 }}
               className="text-center"
             >
-              <div className="text-6xl font-bold gradient-text mb-5">
+              <div className="text-6xl font-bold text-indigo-600 mb-5">
                 {item.step}
               </div>
               <h3 className="text-xl font-bold mb-2 text-foreground">{item.title}</h3>

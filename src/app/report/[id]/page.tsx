@@ -180,8 +180,8 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
     <div className="min-h-screen mesh-gradient">
       {/* Mesh blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-1/4 -left-1/4 w-[500px] h-[500px] rounded-full bg-indigo-400/5 blur-3xl animate-[mesh-move_20s_ease-in-out_infinite]" />
-        <div className="absolute -bottom-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-purple-400/5 blur-3xl animate-[mesh-move-2_25s_ease-in-out_infinite]" />
+        <div className="absolute -top-1/4 -left-1/4 w-[500px] h-[500px] rounded-full bg-indigo-400/[0.02] blur-3xl animate-[mesh-move_20s_ease-in-out_infinite]" />
+        <div className="absolute -bottom-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-purple-400/[0.02] blur-3xl animate-[mesh-move-2_25s_ease-in-out_infinite]" />
       </div>
 
       {/* Nav */}
@@ -262,7 +262,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
           {/* OVERVIEW */}
           {activeTab === "overview" && (
             <motion.div variants={stagger} initial="initial" animate="animate" className="space-y-6">
-              <motion.div variants={fadeUp} className="glass-strong rounded-2xl p-8 shadow-xl shadow-indigo-500/5">
+              <motion.div variants={fadeUp} className="glass-strong rounded-2xl p-8 shadow-sm">
                 <h2 className="text-xl font-bold mb-4 gradient-text">О компании</h2>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   {company.description}
@@ -280,7 +280,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
           {/* PRODUCT */}
           {activeTab === "product" && (
             <motion.div variants={stagger} initial="initial" animate="animate" className="space-y-6">
-              <motion.div variants={fadeUp} className="glass-strong rounded-2xl p-8 shadow-xl shadow-indigo-500/5">
+              <motion.div variants={fadeUp} className="glass-strong rounded-2xl p-8 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
                   <Star className="w-5 h-5 text-amber-500" />
                   <h2 className="text-xl font-bold">Уникальное предложение (USP)</h2>
@@ -304,10 +304,10 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
                     <motion.div
                       key={i}
                       variants={fadeUp}
-                      className="glass-strong rounded-2xl p-6 hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-300 tilt-card"
+                      className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-200 tilt-card"
                     >
                       <h4 className="font-bold text-lg mb-1">{tier.name}</h4>
-                      <p className="text-2xl font-bold gradient-text mb-4">{tier.price}</p>
+                      <p className="text-2xl font-bold text-indigo-600 mb-4">{tier.price}</p>
                       <ul className="space-y-2.5">
                         {tier.features.map((f, j) => (
                           <li key={j} className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -469,7 +469,7 @@ export default function ReportPage({ params }: { params: Promise<{ id: string }>
           {/* RECOMMENDATIONS */}
           {activeTab === "recommendations" && (
             <motion.div variants={stagger} initial="initial" animate="animate">
-              <div className="glass-strong rounded-2xl p-8 shadow-xl shadow-indigo-500/5">
+              <div className="glass-strong rounded-2xl p-8 shadow-sm">
                 <div className="flex items-center gap-2 mb-6">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/25">
                     <Lightbulb className="w-5 h-5 text-white" />
