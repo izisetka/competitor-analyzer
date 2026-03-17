@@ -336,15 +336,7 @@ export default function LandingPage() {
             ))}
           </div>
 
-          {/* Powered by badges */}
-          <div className="flex justify-center gap-3 mt-6">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded border border-gray-200 text-xs text-gray-400">
-              Firecrawl
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded border border-gray-200 text-xs text-gray-400">
-              GPT-4o
-            </span>
-          </div>
+
         </motion.div>
       </section>
 
