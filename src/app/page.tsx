@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useInView } from "framer-motion";
-import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { Marquee } from "@/components/ui/marquee";
 import { Input } from "@/components/ui/input";
@@ -16,6 +15,12 @@ import {
   Zap,
   ArrowRight,
   Sparkles,
+  Eye,
+  Package,
+  Megaphone,
+  Code,
+  Target,
+  Lightbulb,
 } from "lucide-react";
 
 const features = [
@@ -58,6 +63,15 @@ const companies = [
   "Сбер",
   "VK",
   "Lamoda",
+];
+
+const reportCards = [
+  { icon: Eye, title: "Обзор", metric: "24", label: "параметра", color: "from-indigo-500 to-blue-500" },
+  { icon: Package, title: "Продукт", metric: "18", label: "метрик", color: "from-purple-500 to-violet-500" },
+  { icon: Megaphone, title: "Маркетинг", metric: "31", label: "канал", color: "from-pink-500 to-rose-500" },
+  { icon: Code, title: "Технологии", metric: "15", label: "стек", color: "from-cyan-500 to-teal-500" },
+  { icon: Target, title: "SWOT", metric: "4x4", label: "матрица", color: "from-amber-500 to-orange-500" },
+  { icon: Lightbulb, title: "Рекомендации", metric: "12", label: "действий", color: "from-emerald-500 to-green-500" },
 ];
 
 function CountUp({ end, duration = 2000, suffix = "" }: { end: number; duration?: number; suffix?: string }) {
@@ -143,6 +157,11 @@ export default function LandingPage() {
     }
   }
 
+  function scrollToInput() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    document.querySelector<HTMLInputElement>("input")?.focus();
+  }
+
   return (
     <div className="relative min-h-screen overflow-hidden mesh-gradient">
       {/* Subtle background blobs */}
@@ -172,17 +191,17 @@ export default function LandingPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <AnimatedGradientText className="mb-8 px-4 py-1.5">
-            <Sparkles className="w-4 h-4 mr-2" />
-            <span className="text-sm font-medium">Powered by GPT-4o</span>
-          </AnimatedGradientText>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-indigo-200 bg-indigo-50/50">
+            <Sparkles className="w-4 h-4 text-indigo-500" />
+            <span className="text-sm font-medium text-indigo-600">Powered by GPT-4o</span>
+          </div>
         </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-[1.1]"
+          className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-[1.1]"
         >
           <span className="gradient-text">Анализ конкурентов</span>
           <br />
@@ -200,7 +219,7 @@ export default function LandingPage() {
           технологии, SWOT-анализ и рекомендации
         </motion.p>
 
-        {/* Hero URL Input — glass morphism */}
+        {/* Hero URL Input */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -256,21 +275,6 @@ export default function LandingPage() {
             ))}
           </div>
         </motion.div>
-
-        {/* Animated counter */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-8 flex items-center gap-6 text-sm text-muted-foreground"
-        >
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-semibold text-foreground"><CountUp end={12847} /></span> сайтов проанализировано
-          </div>
-          <div className="w-px h-4 bg-border" />
-          <span>Бесплатно. Без регистрации.</span>
-        </motion.div>
       </section>
 
       {/* Social proof — grayscale logos */}
@@ -291,7 +295,158 @@ export default function LandingPage() {
         </Marquee>
       </section>
 
-      {/* Features — 3D tilt cards */}
+      {/* How it works */}
+      <section className="relative z-10 max-w-5xl mx-auto px-6 py-24">
+        {/* Dot pattern background */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: "radial-gradient(circle, rgba(99,102,241,0.08) 1px, transparent 1px)",
+            backgroundSize: "24px 24px",
+            opacity: 0.3,
+          }}
+        />
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16 relative"
+        >
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
+            Как это <span className="gradient-text">работает</span>
+          </h2>
+          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+            Три простых шага до полного отчёта о конкуренте
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-3 gap-10 relative">
+          {[
+            { step: "01", title: "Введите URL", desc: "Просто вставьте ссылку на сайт конкурента" },
+            { step: "02", title: "AI сканирует", desc: "Firecrawl парсит страницы, GPT-4o анализирует данные" },
+            { step: "03", title: "Получите отчёт", desc: "Продукт, маркетинг, технологии, SWOT за 60 секунд" },
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.15 }}
+              className="text-center"
+            >
+              <div className="text-7xl font-extrabold bg-gradient-to-br from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-5">
+                {item.step}
+              </div>
+              <h3 className="text-xl font-bold mb-2 text-foreground">{item.title}</h3>
+              <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Report preview */}
+      <section className="relative z-10 max-w-5xl mx-auto px-6 py-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-14"
+        >
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
+            Что внутри <span className="gradient-text">отчёта</span>
+          </h2>
+          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+            Полная картина о конкуренте в одном дашборде
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="flex justify-center"
+        >
+          <div
+            className="bg-white rounded-2xl p-6 md:p-8 shadow-xl shadow-slate-200/60 border border-slate-100 max-w-3xl w-full"
+            style={{ transform: "perspective(1200px) rotateY(-2deg) rotateX(1deg)" }}
+          >
+            {/* Mock browser bar */}
+            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-slate-100">
+              <div className="flex gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-red-300" />
+                <div className="w-3 h-3 rounded-full bg-amber-300" />
+                <div className="w-3 h-3 rounded-full bg-green-300" />
+              </div>
+              <div className="flex-1 ml-3 h-7 bg-slate-50 rounded-lg flex items-center px-3">
+                <span className="text-xs text-muted-foreground">competitorai.ru/report/wildberries</span>
+              </div>
+            </div>
+
+            {/* Report cards grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+              {reportCards.map((card, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
+                  className="bg-slate-50/80 rounded-xl p-4 border border-slate-100 hover:shadow-md transition-shadow"
+                >
+                  <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${card.color} flex items-center justify-center mb-3`}>
+                    <card.icon className="w-4.5 h-4.5 text-white" />
+                  </div>
+                  <p className="text-xs font-medium text-muted-foreground mb-1">{card.title}</p>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-2xl font-bold text-foreground">{card.metric}</span>
+                    <span className="text-xs text-muted-foreground">{card.label}</span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Stats bar */}
+      <section className="relative z-10 w-full py-20">
+        <div className="max-w-5xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="bg-white rounded-2xl p-10 md:p-14 shadow-lg shadow-slate-200/40 border border-slate-100"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 text-center">
+              <div>
+                <div className="text-4xl md:text-5xl font-extrabold text-foreground mb-2">
+                  <CountUp end={12847} />
+                </div>
+                <p className="text-muted-foreground font-medium">сайтов проанализировано</p>
+              </div>
+              <div className="md:border-x md:border-slate-100">
+                <div className="text-4xl md:text-5xl font-extrabold text-foreground mb-2">
+                  127
+                </div>
+                <p className="text-muted-foreground font-medium">метрик в каждом отчёте</p>
+              </div>
+              <div>
+                <div className="text-4xl md:text-5xl font-extrabold text-foreground mb-2">
+                  &lt; 60 сек
+                </div>
+                <p className="text-muted-foreground font-medium">среднее время анализа</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Features */}
       <section className="relative z-10 max-w-6xl mx-auto px-6 py-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -330,35 +485,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="relative z-10 max-w-4xl mx-auto px-6 py-20">
-        <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 tracking-tight">
-          Как это <span className="gradient-text">работает</span>
-        </h2>
-        <div className="grid md:grid-cols-3 gap-10">
-          {[
-            { step: "01", title: "Введите URL", desc: "Вставьте ссылку на сайт конкурента в поле выше" },
-            { step: "02", title: "AI анализирует", desc: "GPT-4o сканирует сайт и извлекает все данные" },
-            { step: "03", title: "Получите отчёт", desc: "Готовый отчёт с SWOT и рекомендациями" },
-          ].map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
-              className="text-center"
-            >
-              <div className="text-6xl font-bold text-indigo-600 mb-5">
-                {item.step}
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-foreground">{item.title}</h3>
-              <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
       {/* CTA */}
       <section className="relative z-10 max-w-3xl mx-auto px-6 py-24 text-center">
         <motion.div
@@ -368,18 +494,18 @@ export default function LandingPage() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">
-            Готовы узнать всё <br />о <span className="gradient-text">конкуренте</span>?
+            Готовы узнать всё <br />о <span className="gradient-text">конкурентах</span>?
           </h2>
+          <p className="text-muted-foreground text-lg mb-8 max-w-lg mx-auto">
+            Бесплатно. Без регистрации. Результат за минуту.
+          </p>
           <ShimmerButton
             className="h-16 px-12 rounded-xl"
             shimmerSize="0.08em"
-            onClick={() => {
-              window.scrollTo({ top: 0, behavior: "smooth" });
-              document.querySelector<HTMLInputElement>("input")?.focus();
-            }}
+            onClick={scrollToInput}
           >
             <span className="text-lg font-bold flex items-center gap-2">
-              Начать анализ бесплатно
+              Начать бесплатно
               <ArrowRight className="w-5 h-5" />
             </span>
           </ShimmerButton>
