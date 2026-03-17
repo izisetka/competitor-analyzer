@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useInView } from "framer-motion";
-import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { Marquee } from "@/components/ui/marquee";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,7 +11,6 @@ import {
   Shield,
   Brain,
   Globe,
-  Zap,
   ArrowRight,
   Sparkles,
   Eye,
@@ -66,12 +64,12 @@ const companies = [
 ];
 
 const reportCards = [
-  { icon: Eye, title: "Обзор", metric: "24", label: "параметра", color: "from-indigo-500 to-blue-500" },
-  { icon: Package, title: "Продукт", metric: "18", label: "метрик", color: "from-purple-500 to-violet-500" },
-  { icon: Megaphone, title: "Маркетинг", metric: "31", label: "канал", color: "from-pink-500 to-rose-500" },
-  { icon: Code, title: "Технологии", metric: "15", label: "стек", color: "from-cyan-500 to-teal-500" },
-  { icon: Target, title: "SWOT", metric: "4x4", label: "матрица", color: "from-amber-500 to-orange-500" },
-  { icon: Lightbulb, title: "Рекомендации", metric: "12", label: "действий", color: "from-emerald-500 to-green-500" },
+  { icon: Eye, title: "Обзор", metric: "24", label: "параметра", borderColor: "border-l-indigo-500" },
+  { icon: Package, title: "Продукт", metric: "18", label: "метрик", borderColor: "border-l-purple-500" },
+  { icon: Megaphone, title: "Маркетинг", metric: "31", label: "канал", borderColor: "border-l-pink-500" },
+  { icon: Code, title: "Технологии", metric: "15", label: "стек", borderColor: "border-l-cyan-500" },
+  { icon: Target, title: "SWOT", metric: "4x4", label: "матрица", borderColor: "border-l-amber-500" },
+  { icon: Lightbulb, title: "Рекомендации", metric: "12", label: "действий", borderColor: "border-l-emerald-500" },
 ];
 
 function CountUp({ end, duration = 2000, suffix = "" }: { end: number; duration?: number; suffix?: string }) {
@@ -191,9 +189,9 @@ export default function LandingPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-indigo-200 bg-indigo-50/50">
-            <Sparkles className="w-4 h-4 text-indigo-500" />
-            <span className="text-sm font-medium text-indigo-600">Powered by GPT-4o</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 mb-8 rounded-full border border-gray-200 bg-white">
+            <Sparkles className="w-3.5 h-3.5 text-gray-400" />
+            <span className="text-xs font-medium text-gray-500">Powered by GPT-4o</span>
           </div>
         </motion.div>
 
@@ -239,26 +237,23 @@ export default function LandingPage() {
                   className="pl-14 h-16 bg-slate-50/50 border-0 text-xl rounded-xl focus-visible:ring-2 focus-visible:ring-indigo-500/30"
                 />
               </div>
-              <ShimmerButton
-                className="h-16 px-10 rounded-xl"
-                shimmerSize="0.06em"
+              <button
+                className="h-16 px-10 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold flex items-center gap-2 transition-colors disabled:opacity-50"
                 onClick={handleSubmit}
                 disabled={isSubmitting}
               >
-                <span className="font-semibold flex items-center gap-2">
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Анализ...
-                    </>
-                  ) : (
-                    <>
-                      Анализировать
-                      <ArrowRight className="w-4 h-4" />
-                    </>
-                  )}
-                </span>
-              </ShimmerButton>
+                {isSubmitting ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Анализ...
+                  </>
+                ) : (
+                  <>
+                    Анализировать
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
+              </button>
             </div>
           </div>
 
@@ -274,45 +269,44 @@ export default function LandingPage() {
               </button>
             ))}
           </div>
+
+          {/* Powered by badges */}
+          <div className="flex justify-center gap-3 mt-6">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded border border-gray-200 text-xs text-gray-400">
+              Firecrawl
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded border border-gray-200 text-xs text-gray-400">
+              GPT-4o
+            </span>
+          </div>
         </motion.div>
       </section>
 
       {/* Social proof — grayscale logos */}
-      <section className="relative z-10 py-10 overflow-hidden">
-        <p className="text-center text-xs font-medium text-muted-foreground uppercase tracking-widest mb-5">
+      <section className="relative z-10 py-8 overflow-hidden border-b border-[#E5E5E5]">
+        <p className="text-center text-xs font-medium text-gray-400 uppercase tracking-widest mb-4">
           Анализируйте лидеров рынка
         </p>
         <Marquee pauseOnHover className="[--duration:35s]">
           {companies.map((name, i) => (
             <div
               key={i}
-              className="flex items-center gap-2.5 px-6 py-3 rounded-full glass mx-2 grayscale hover:grayscale-0 transition-all duration-300 hover:shadow-md"
+              className="flex items-center gap-2 px-4 py-2 mx-2"
             >
-              <Zap className="w-4 h-4 text-indigo-500" />
-              <span className="text-sm font-semibold text-foreground">{name}</span>
+              <span className="text-sm text-gray-300 font-medium">{name}</span>
             </div>
           ))}
         </Marquee>
       </section>
 
       {/* How it works */}
-      <section className="relative z-10 max-w-5xl mx-auto px-6 py-24">
-        {/* Dot pattern background */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: "radial-gradient(circle, rgba(99,102,241,0.08) 1px, transparent 1px)",
-            backgroundSize: "24px 24px",
-            opacity: 0.3,
-          }}
-        />
-
+      <section className="relative z-10 max-w-5xl mx-auto px-6 py-16 border-b border-[#E5E5E5]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16 relative"
+          className="text-center mb-12 relative"
         >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
             Как это работает
@@ -336,8 +330,8 @@ export default function LandingPage() {
               transition={{ duration: 0.5, delay: i * 0.15 }}
               className="text-center"
             >
-              <div className="text-7xl font-extrabold bg-gradient-to-br from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-5">
-                {item.step}
+              <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
+                <span className="font-mono text-sm font-medium text-foreground">{item.step}</span>
               </div>
               <h3 className="text-xl font-bold mb-2 text-foreground">{item.title}</h3>
               <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
@@ -347,13 +341,13 @@ export default function LandingPage() {
       </section>
 
       {/* Report preview */}
-      <section className="relative z-10 max-w-5xl mx-auto px-6 py-20">
+      <section className="relative z-10 max-w-5xl mx-auto px-6 py-16 border-b border-[#E5E5E5]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
             Что внутри отчёта
@@ -370,10 +364,7 @@ export default function LandingPage() {
           transition={{ duration: 0.7 }}
           className="flex justify-center"
         >
-          <div
-            className="bg-white rounded-2xl p-6 md:p-8 shadow-xl shadow-slate-200/60 border border-slate-100 max-w-3xl w-full"
-            style={{ transform: "perspective(1200px) rotateY(-2deg) rotateX(1deg)" }}
-          >
+          <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg shadow-slate-200/40 border border-slate-100 max-w-3xl w-full">
             {/* Mock browser bar */}
             <div className="flex items-center gap-2 mb-6 pb-4 border-b border-slate-100">
               <div className="flex gap-1.5">
@@ -395,10 +386,10 @@ export default function LandingPage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
-                  className="bg-slate-50/80 rounded-xl p-4 border border-slate-100 hover:shadow-md transition-shadow"
+                  className={`bg-white rounded-xl p-4 border border-slate-100 border-l-[3px] ${card.borderColor} hover:shadow-md transition-shadow`}
                 >
-                  <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${card.color} flex items-center justify-center mb-3`}>
-                    <card.icon className="w-4.5 h-4.5 text-white" />
+                  <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center mb-3">
+                    <card.icon className="w-4 h-4 text-slate-600" />
                   </div>
                   <p className="text-xs font-medium text-muted-foreground mb-1">{card.title}</p>
                   <div className="flex items-baseline gap-1.5">
@@ -413,33 +404,32 @@ export default function LandingPage() {
       </section>
 
       {/* Stats bar */}
-      <section className="relative z-10 w-full py-20">
+      <section className="relative z-10 w-full py-16 border-b border-[#E5E5E5]">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-white rounded-2xl p-10 md:p-14 shadow-lg shadow-slate-200/40 border border-slate-100"
           >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 text-center">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 text-center">
               <div>
-                <div className="text-4xl md:text-5xl font-extrabold text-foreground mb-2">
+                <div className="text-4xl font-bold font-mono text-foreground mb-1">
                   <CountUp end={12847} />
                 </div>
-                <p className="text-muted-foreground font-medium">сайтов проанализировано</p>
+                <p className="text-sm text-muted-foreground">сайтов проанализировано</p>
               </div>
-              <div className="md:border-x md:border-slate-100">
-                <div className="text-4xl md:text-5xl font-extrabold text-foreground mb-2">
+              <div className="md:border-x md:border-[#E5E5E5]">
+                <div className="text-4xl font-bold font-mono text-foreground mb-1">
                   127
                 </div>
-                <p className="text-muted-foreground font-medium">метрик в каждом отчёте</p>
+                <p className="text-sm text-muted-foreground">метрик в каждом отчёте</p>
               </div>
               <div>
-                <div className="text-4xl md:text-5xl font-extrabold text-foreground mb-2">
+                <div className="text-4xl font-bold font-mono text-foreground mb-1">
                   &lt; 60 сек
                 </div>
-                <p className="text-muted-foreground font-medium">среднее время анализа</p>
+                <p className="text-sm text-muted-foreground">среднее время анализа</p>
               </div>
             </div>
           </motion.div>
@@ -447,7 +437,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features */}
-      <section className="relative z-10 max-w-6xl mx-auto px-6 py-20">
+      <section className="relative z-10 max-w-6xl mx-auto px-6 py-16 border-b border-[#E5E5E5]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -486,7 +476,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA */}
-      <section className="relative z-10 max-w-3xl mx-auto px-6 py-24 text-center">
+      <section className="relative z-10 max-w-3xl mx-auto px-6 py-16 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -500,16 +490,13 @@ export default function LandingPage() {
             Бесплатно. Без регистрации. Результат за минуту.
           </p>
           <div className="flex justify-center">
-            <ShimmerButton
-              className="h-16 px-12 rounded-xl"
-              shimmerSize="0.08em"
+            <button
+              className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg h-12 px-8 font-semibold flex items-center gap-2 transition-colors"
               onClick={scrollToInput}
             >
-              <span className="text-lg font-bold flex items-center gap-2">
-                Начать бесплатно
-                <ArrowRight className="w-5 h-5" />
-              </span>
-            </ShimmerButton>
+              Начать бесплатно
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         </motion.div>
       </section>
