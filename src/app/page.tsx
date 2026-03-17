@@ -5,6 +5,10 @@ import { useRouter } from "next/navigation";
 import { motion, useInView } from "framer-motion";
 import { Marquee } from "@/components/ui/marquee";
 import { Input } from "@/components/ui/input";
+import { BorderBeam } from "@/components/ui/border-beam";
+import { NumberTicker } from "@/components/ui/number-ticker";
+import { AnimatedBeam } from "@/components/ui/animated-beam";
+import { DotPattern } from "@/components/ui/dot-pattern";
 import {
   Search,
   BarChart3,
@@ -72,28 +76,44 @@ const reportCards = [
   { icon: Lightbulb, title: "Рекомендации", metric: "12", label: "действий", borderColor: "border-l-emerald-500" },
 ];
 
-function CountUp({ end, duration = 2000, suffix = "" }: { end: number; duration?: number; suffix?: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
+const placeholderDomains = ["wildberries.ru", "ozon.ru", "tbank.ru", "yandex.ru"];
+
+function AnimatedPlaceholder() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    if (!isInView) return;
-    let start = 0;
-    const increment = end / (duration / 16);
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= end) {
-        setCount(end);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-    return () => clearInterval(timer);
-  }, [isInView, end, duration]);
+    const current = placeholderDomains[currentIndex];
+    const timeout = isDeleting ? 30 : 60;
 
-  return <span ref={ref}>{count.toLocaleString("ru-RU")}{suffix}</span>;
+    if (!isDeleting && displayText === current) {
+      const timer = setTimeout(() => setIsDeleting(true), 2000);
+      return () => clearTimeout(timer);
+    }
+    if (isDeleting && displayText === "") {
+      setIsDeleting(false);
+      setCurrentIndex((prev) => (prev + 1) % placeholderDomains.length);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setDisplayText(
+        isDeleting
+          ? current.substring(0, displayText.length - 1)
+          : current.substring(0, displayText.length + 1)
+      );
+    }, timeout);
+
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, currentIndex]);
+
+  return (
+    <span className="text-muted-foreground/50 pointer-events-none select-none">
+      {displayText}
+      <span className="animate-pulse">|</span>
+    </span>
+  );
 }
 
 function TypingText({ texts }: { texts: string[] }) {
@@ -134,10 +154,34 @@ function TypingText({ texts }: { texts: string[] }) {
   );
 }
 
+const sectionVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const staggerContainer = {
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const staggerItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
 export default function LandingPage() {
   const [url, setUrl] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+
+  // Refs for animated beam in "how it works"
+  const stepsContainerRef = useRef<HTMLDivElement>(null);
+  const step1Ref = useRef<HTMLDivElement>(null);
+  const step2Ref = useRef<HTMLDivElement>(null);
+  const step3Ref = useRef<HTMLDivElement>(null);
 
   async function handleSubmit() {
     if (!url.trim()) return;
@@ -184,10 +228,19 @@ export default function LandingPage() {
 
       {/* Hero */}
       <section className="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-16 pb-8 max-w-5xl mx-auto">
+        {/* Dot grid background — hero only */}
+        <DotPattern
+          width={24}
+          height={24}
+          cr={0.8}
+          className="absolute inset-0 opacity-[0.035] z-0"
+        />
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="relative z-10"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 mb-8 rounded-full border border-gray-200 bg-white">
             <Sparkles className="w-3.5 h-3.5 text-gray-400" />
@@ -199,7 +252,7 @@ export default function LandingPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-[1.1]"
+          className="relative z-10 text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-[1.1]"
         >
           Анализ конкурентов
           <br />
@@ -211,7 +264,7 @@ export default function LandingPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed"
+          className="relative z-10 text-lg md:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed"
         >
           Введите URL конкурента — получите полный отчёт: продукт, маркетинг,
           технологии, SWOT-анализ и рекомендации
@@ -222,19 +275,32 @@ export default function LandingPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="w-full max-w-2xl"
+          className="relative z-10 w-full max-w-2xl"
         >
-          <div className="bg-white rounded-2xl p-3 shadow-lg shadow-slate-200/50 border border-slate-100">
+          <div className="relative bg-white rounded-2xl p-3 shadow-lg shadow-slate-200/50 border border-slate-100">
+            <BorderBeam
+              size={120}
+              duration={8}
+              colorFrom="#3b82f6"
+              colorTo="#6366f1"
+              borderWidth={1.5}
+            />
             <div className="flex flex-col sm:flex-row gap-3">
               <div className="relative flex-1">
-                <Globe className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Globe className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
+                {/* Animated placeholder overlay */}
+                {!url && (
+                  <div className="absolute left-14 top-1/2 -translate-y-1/2 text-xl z-[1]">
+                    <AnimatedPlaceholder />
+                  </div>
+                )}
                 <Input
                   type="text"
-                  placeholder="wildberries.ru"
+                  placeholder=""
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-                  className="pl-14 h-16 bg-slate-50/50 border-0 text-xl rounded-xl focus-visible:ring-2 focus-visible:ring-indigo-500/30"
+                  className="pl-14 h-16 bg-slate-50/50 border-0 text-xl rounded-xl focus-visible:ring-2 focus-visible:ring-indigo-500/30 relative z-[2] bg-transparent"
                 />
               </div>
               <button
@@ -259,7 +325,7 @@ export default function LandingPage() {
 
           {/* Quick examples */}
           <div className="flex flex-wrap justify-center gap-2 mt-4">
-            {["wildberries.ru", "ozon.ru", "tbank.ru", "yandex.ru"].map((example) => (
+            {placeholderDomains.map((example) => (
               <button
                 key={example}
                 onClick={() => setUrl(example)}
@@ -283,7 +349,14 @@ export default function LandingPage() {
       </section>
 
       {/* Social proof — grayscale logos */}
-      <section className="relative z-10 py-8 overflow-hidden border-b border-[#E5E5E5]">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={sectionVariants}
+        transition={{ duration: 0.6 }}
+        className="relative z-10 py-8 overflow-hidden border-b border-[#E5E5E5]"
+      >
         <p className="text-center text-xs font-medium text-gray-400 uppercase tracking-widest mb-4">
           Анализируйте лидеров рынка
         </p>
@@ -297,14 +370,15 @@ export default function LandingPage() {
             </div>
           ))}
         </Marquee>
-      </section>
+      </motion.section>
 
       {/* How it works */}
       <section className="relative z-10 max-w-5xl mx-auto px-6 py-16 border-b border-[#E5E5E5]">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
+          variants={sectionVariants}
           transition={{ duration: 0.6 }}
           className="text-center mb-12 relative"
         >
@@ -316,21 +390,52 @@ export default function LandingPage() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-10 relative">
+        <div ref={stepsContainerRef} className="grid md:grid-cols-3 gap-10 relative">
+          {/* Animated beams connecting steps — desktop only */}
+          <div className="hidden md:block">
+            <AnimatedBeam
+              containerRef={stepsContainerRef}
+              fromRef={step1Ref}
+              toRef={step2Ref}
+              pathColor="#e2e8f0"
+              pathWidth={2}
+              pathOpacity={0.4}
+              gradientStartColor="#3b82f6"
+              gradientStopColor="#6366f1"
+              duration={4}
+            />
+            <AnimatedBeam
+              containerRef={stepsContainerRef}
+              fromRef={step2Ref}
+              toRef={step3Ref}
+              pathColor="#e2e8f0"
+              pathWidth={2}
+              pathOpacity={0.4}
+              gradientStartColor="#6366f1"
+              gradientStopColor="#8b5cf6"
+              duration={4}
+              delay={1}
+            />
+          </div>
+
           {[
-            { step: "01", title: "Введите URL", desc: "Просто вставьте ссылку на сайт конкурента" },
-            { step: "02", title: "AI сканирует", desc: "Автоматический парсинг страниц и AI-анализ данных" },
-            { step: "03", title: "Получите отчёт", desc: "Продукт, маркетинг, технологии, SWOT за 60 секунд" },
+            { step: "01", title: "Введите URL", desc: "Просто вставьте ссылку на сайт конкурента", ref: step1Ref },
+            { step: "02", title: "AI сканирует", desc: "Автоматический парсинг страниц и AI-анализ данных", ref: step2Ref },
+            { step: "03", title: "Получите отчёт", desc: "Продукт, маркетинг, технологии, SWOT за 60 секунд", ref: step3Ref },
           ].map((item, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
+              variants={staggerItem}
               transition={{ duration: 0.5, delay: i * 0.15 }}
               className="text-center"
             >
-              <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
+              <div
+                ref={item.ref}
+                className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4 relative z-10"
+              >
                 <span className="font-mono text-sm font-medium text-foreground">{item.step}</span>
               </div>
               <h3 className="text-xl font-bold mb-2 text-foreground">{item.title}</h3>
@@ -343,9 +448,10 @@ export default function LandingPage() {
       {/* Report preview */}
       <section className="relative z-10 max-w-5xl mx-auto px-6 py-16 border-b border-[#E5E5E5]">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
+          variants={sectionVariants}
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
@@ -364,42 +470,53 @@ export default function LandingPage() {
           transition={{ duration: 0.7 }}
           className="flex justify-center"
         >
-          <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg shadow-slate-200/40 border border-slate-100 max-w-3xl w-full">
-            {/* Mock browser bar */}
-            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-slate-100">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-300" />
-                <div className="w-3 h-3 rounded-full bg-amber-300" />
-                <div className="w-3 h-3 rounded-full bg-green-300" />
+          {/* Floating animation wrapper */}
+          <motion.div
+            animate={{ y: [-8, 8, -8] }}
+            transition={{ duration: 4, ease: "easeInOut", repeat: Infinity }}
+            className="max-w-3xl w-full"
+          >
+            <div className="bg-white rounded-2xl p-6 md:p-8 shadow-lg shadow-slate-200/40 border border-slate-100">
+              {/* Mock browser bar */}
+              <div className="flex items-center gap-2 mb-6 pb-4 border-b border-slate-100">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-red-300" />
+                  <div className="w-3 h-3 rounded-full bg-amber-300" />
+                  <div className="w-3 h-3 rounded-full bg-green-300" />
+                </div>
+                <div className="flex-1 ml-3 h-7 bg-slate-50 rounded-lg flex items-center px-3">
+                  <span className="text-xs text-muted-foreground">competitorai.ru/report/wildberries</span>
+                </div>
               </div>
-              <div className="flex-1 ml-3 h-7 bg-slate-50 rounded-lg flex items-center px-3">
-                <span className="text-xs text-muted-foreground">competitorai.ru/report/wildberries</span>
-              </div>
-            </div>
 
-            {/* Report cards grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-              {reportCards.map((card, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
-                  className={`bg-white rounded-xl p-4 border border-slate-100 border-l-[3px] ${card.borderColor} hover:shadow-md transition-shadow`}
-                >
-                  <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center mb-3">
-                    <card.icon className="w-4 h-4 text-slate-600" />
-                  </div>
-                  <p className="text-xs font-medium text-muted-foreground mb-1">{card.title}</p>
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="text-2xl font-bold text-foreground">{card.metric}</span>
-                    <span className="text-xs text-muted-foreground">{card.label}</span>
-                  </div>
-                </motion.div>
-              ))}
+              {/* Report cards grid */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={staggerContainer}
+                className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4"
+              >
+                {reportCards.map((card, i) => (
+                  <motion.div
+                    key={i}
+                    variants={staggerItem}
+                    transition={{ duration: 0.4 }}
+                    className={`bg-white rounded-xl p-4 border border-slate-100 border-l-[3px] ${card.borderColor} hover:shadow-md transition-shadow`}
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center mb-3">
+                      <card.icon className="w-4 h-4 text-slate-600" />
+                    </div>
+                    <p className="text-xs font-medium text-muted-foreground mb-1">{card.title}</p>
+                    <div className="flex items-baseline gap-1.5">
+                      <span className="text-2xl font-bold text-foreground">{card.metric}</span>
+                      <span className="text-xs text-muted-foreground">{card.label}</span>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
       </section>
 
@@ -407,31 +524,35 @@ export default function LandingPage() {
       <section className="relative z-10 w-full py-16 border-b border-[#E5E5E5]">
         <div className="max-w-5xl mx-auto px-6">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            variants={staggerContainer}
           >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 text-center">
+            <motion.div
+              variants={sectionVariants}
+              transition={{ duration: 0.6 }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 text-center"
+            >
               <div>
                 <div className="text-4xl font-bold font-mono text-foreground mb-1">
-                  <CountUp end={12847} />
+                  <NumberTicker value={12847} className="text-foreground" />
                 </div>
                 <p className="text-sm text-muted-foreground">сайтов проанализировано</p>
               </div>
               <div className="md:border-x md:border-[#E5E5E5]">
                 <div className="text-4xl font-bold font-mono text-foreground mb-1">
-                  127
+                  <NumberTicker value={127} className="text-foreground" />
                 </div>
                 <p className="text-sm text-muted-foreground">метрик в каждом отчёте</p>
               </div>
               <div>
                 <div className="text-4xl font-bold font-mono text-foreground mb-1">
-                  &lt; 60 сек
+                  {"< "}<NumberTicker value={60} className="text-foreground" /> сек
                 </div>
                 <p className="text-sm text-muted-foreground">среднее время анализа</p>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -439,9 +560,10 @@ export default function LandingPage() {
       {/* Features */}
       <section className="relative z-10 max-w-6xl mx-auto px-6 py-16 border-b border-[#E5E5E5]">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
+          variants={sectionVariants}
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
@@ -453,17 +575,21 @@ export default function LandingPage() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainer}
+          className="grid grid-cols-1 md:grid-cols-2 gap-5"
+        >
           {features.map((feature, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+              variants={staggerItem}
+              transition={{ duration: 0.5 }}
               className="tilt-card"
             >
-              <div className={`bg-white rounded-2xl p-8 h-full border border-slate-100 shadow-sm hover:shadow-md transition-all duration-200`}>
+              <div className="bg-white rounded-2xl p-8 h-full border border-slate-100 shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-200">
                 <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-5 shadow-lg`}>
                   <feature.icon className="w-6 h-6 text-white" />
                 </div>
@@ -472,15 +598,16 @@ export default function LandingPage() {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* CTA */}
       <section className="relative z-10 max-w-3xl mx-auto px-6 py-16 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
+          variants={sectionVariants}
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">
