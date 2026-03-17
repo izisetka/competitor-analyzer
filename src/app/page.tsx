@@ -319,7 +319,7 @@ export default function LandingPage() {
         <div className="grid md:grid-cols-3 gap-10 relative">
           {[
             { step: "01", title: "Введите URL", desc: "Просто вставьте ссылку на сайт конкурента" },
-            { step: "02", title: "AI сканирует", desc: "Firecrawl парсит страницы, ИИ анализирует данные" },
+            { step: "02", title: "AI сканирует", desc: "Автоматический парсинг страниц и AI-анализ данных" },
             { step: "03", title: "Получите отчёт", desc: "Продукт, маркетинг, технологии, SWOT за 60 секунд" },
           ].map((item, i) => (
             <motion.div
