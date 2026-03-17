@@ -129,7 +129,7 @@ function TypingText({ texts }: { texts: string[] }) {
   }, [displayText, isDeleting, currentIndex, texts]);
 
   return (
-    <span className="gradient-text">
+    <span className="text-blue-600">
       {displayText}
       <span className="animate-pulse ml-0.5">|</span>
     </span>
@@ -203,7 +203,7 @@ export default function LandingPage() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 leading-[1.1]"
         >
-          <span className="gradient-text">Анализ конкурентов</span>
+          Анализ конкурентов
           <br />
           <span className="text-foreground">за{" "}</span>
           <TypingText texts={["60 секунд", "один клик", "минуту"]} />
@@ -315,7 +315,7 @@ export default function LandingPage() {
           className="text-center mb-16 relative"
         >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-            Как это <span className="gradient-text">работает</span>
+            Как это работает
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
             Три простых шага до полного отчёта о конкуренте
@@ -356,7 +356,7 @@ export default function LandingPage() {
           className="text-center mb-14"
         >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-            Что внутри <span className="gradient-text">отчёта</span>
+            Что внутри отчёта
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
             Полная картина о конкуренте в одном дашборде
@@ -456,7 +456,7 @@ export default function LandingPage() {
           className="text-center mb-14"
         >
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-            <span className="gradient-text">Всё что нужно</span> для анализа
+            Всё что нужно для анализа
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
             Один URL — полная картина о конкуренте за считанные секунды
@@ -494,21 +494,23 @@ export default function LandingPage() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tight">
-            Готовы узнать всё <br />о <span className="gradient-text">конкурентах</span>?
+            Готовы узнать всё <br />о конкурентах?
           </h2>
           <p className="text-muted-foreground text-lg mb-8 max-w-lg mx-auto">
             Бесплатно. Без регистрации. Результат за минуту.
           </p>
-          <ShimmerButton
-            className="h-16 px-12 rounded-xl"
-            shimmerSize="0.08em"
-            onClick={scrollToInput}
-          >
-            <span className="text-lg font-bold flex items-center gap-2">
-              Начать бесплатно
-              <ArrowRight className="w-5 h-5" />
-            </span>
-          </ShimmerButton>
+          <div className="flex justify-center">
+            <ShimmerButton
+              className="h-16 px-12 rounded-xl"
+              shimmerSize="0.08em"
+              onClick={scrollToInput}
+            >
+              <span className="text-lg font-bold flex items-center gap-2">
+                Начать бесплатно
+                <ArrowRight className="w-5 h-5" />
+              </span>
+            </ShimmerButton>
+          </div>
         </motion.div>
       </section>
 
