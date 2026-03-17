@@ -1,21 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const inter = Inter({
+  variable: "--font-sans",
+  subsets: ["latin", "cyrillic"],
 });
 
 export const metadata: Metadata = {
-  title: "Competitor Analyzer — Анализ конкурентов",
-  description: "AI-powered анализ конкурентов за 60 секунд",
+  title: "CompetitorAI — Конкурентная разведка с AI",
+  description: "Введите URL конкурента — получите полный отчёт за 60 секунд",
 };
 
 export default function RootLayout({
@@ -25,9 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${inter.variable} antialiased`}>
         <TooltipProvider>{children}</TooltipProvider>
       </body>
     </html>
