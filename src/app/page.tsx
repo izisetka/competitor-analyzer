@@ -391,8 +391,8 @@ export default function LandingPage() {
         </motion.div>
 
         <div ref={stepsContainerRef} className="grid md:grid-cols-3 gap-10 relative">
-          {/* Animated beams connecting steps — desktop only */}
-          <div className="hidden md:block">
+          {/* Animated beams connecting steps — desktop only, absolute positioned */}
+          <div className="hidden md:block absolute inset-0 pointer-events-none z-0">
             <AnimatedBeam
               containerRef={stepsContainerRef}
               fromRef={step1Ref}
