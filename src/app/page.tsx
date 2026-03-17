@@ -31,7 +31,7 @@ const features = [
   },
   {
     icon: Brain,
-    title: "AI анализ GPT-4o",
+    title: "AI аналитика",
     description: "Нейросеть анализирует данные и формирует структурированный бизнес-отчёт",
     gradient: "from-purple-500 to-pink-400",
     bg: "bg-purple-500/5",
@@ -191,7 +191,7 @@ export default function LandingPage() {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 mb-8 rounded-full border border-gray-200 bg-white">
             <Sparkles className="w-3.5 h-3.5 text-gray-400" />
-            <span className="text-xs font-medium text-gray-500">Powered by GPT-4o</span>
+            <span className="text-xs font-medium text-gray-500">На базе ИИ</span>
           </div>
         </motion.div>
 
@@ -319,7 +319,7 @@ export default function LandingPage() {
         <div className="grid md:grid-cols-3 gap-10 relative">
           {[
             { step: "01", title: "Введите URL", desc: "Просто вставьте ссылку на сайт конкурента" },
-            { step: "02", title: "AI сканирует", desc: "Firecrawl парсит страницы, GPT-4o анализирует данные" },
+            { step: "02", title: "AI сканирует", desc: "Firecrawl парсит страницы, ИИ анализирует данные" },
             { step: "03", title: "Получите отчёт", desc: "Продукт, маркетинг, технологии, SWOT за 60 секунд" },
           ].map((item, i) => (
             <motion.div
