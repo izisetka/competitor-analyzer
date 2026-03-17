@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Globe, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 const placeholderDomains = ["wildberries.ru", "ozon.ru", "tbank.ru", "yandex.ru"];
 
@@ -191,16 +192,22 @@ export default function LandingPage() {
           <p className="text-muted-foreground text-sm mb-8">Так выглядит результат анализа wildberries.ru</p>
 
           {/* Browser chrome mockup */}
-          <div className="rounded-xl border border-slate-200 bg-white shadow-lg overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="rounded-xl border border-slate-200 bg-white shadow-xl overflow-hidden hover:scale-[1.01] transition-transform duration-300"
+          >
             {/* Title bar */}
-            <div className="flex items-center gap-2 px-4 py-3 bg-slate-100 border-b border-slate-200">
+            <div className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-slate-800 to-slate-600 border-b border-slate-700">
               <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-slate-300" />
-                <div className="w-3 h-3 rounded-full bg-slate-300" />
-                <div className="w-3 h-3 rounded-full bg-slate-300" />
+                <div className="w-3 h-3 rounded-full bg-red-400" />
+                <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                <div className="w-3 h-3 rounded-full bg-green-400" />
               </div>
               <div className="flex-1 mx-2">
-                <div className="bg-white rounded-md px-3 py-1 text-xs text-muted-foreground border border-slate-200 max-w-sm">
+                <div className="bg-white/10 backdrop-blur rounded-md px-3 py-1 text-xs text-slate-300 border border-white/10 max-w-sm">
                   competitorai.ru/report/wildberries-ru
                 </div>
               </div>
@@ -222,16 +229,23 @@ export default function LandingPage() {
               {/* Scores row */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  { label: "Технологии", value: "23", sub: "React, Node.js, Go" },
-                  { label: "Страницы", value: "148", sub: "проиндексировано" },
-                  { label: "SEO-оценка", value: "72/100", sub: "12 без описания" },
-                  { label: "Скорость", value: "1.8s", sub: "LCP мобильный" },
-                ].map((m) => (
-                  <div key={m.label} className="bg-slate-50 rounded-lg p-3">
-                    <p className="text-2xl font-bold tracking-tight">{m.value}</p>
+                  { label: "Технологии", value: "23", sub: "React, Node.js, Go", bg: "bg-blue-50", border: "border-l-[3px] border-blue-400", color: "text-blue-600" },
+                  { label: "Страницы", value: "148", sub: "проиндексировано", bg: "bg-green-50", border: "border-l-[3px] border-green-400", color: "text-green-600" },
+                  { label: "SEO-оценка", value: "72/100", sub: "12 без описания", bg: "bg-purple-50", border: "border-l-[3px] border-purple-400", color: "text-purple-600" },
+                  { label: "Скорость", value: "1.8s", sub: "LCP мобильный", bg: "bg-amber-50", border: "border-l-[3px] border-amber-400", color: "text-amber-600" },
+                ].map((m, i) => (
+                  <motion.div
+                    key={m.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: i * 0.1, ease: "easeOut" }}
+                    className={`${m.bg} ${m.border} rounded-lg p-3`}
+                  >
+                    <p className={`text-3xl font-bold tracking-tight ${m.color}`}>{m.value}</p>
                     <p className="text-xs font-medium mt-0.5">{m.label}</p>
                     <p className="text-xs text-muted-foreground">{m.sub}</p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
 
@@ -239,21 +253,21 @@ export default function LandingPage() {
               <div>
                 <h4 className="text-sm font-semibold mb-3">Ключевые находки</h4>
                 <div className="space-y-2 text-sm">
-                  <div className="flex gap-2">
-                    <span className="text-amber-500 shrink-0">▲</span>
-                    <span>Нет публичной страницы с ценами API — возможно, скрытый enterprise-тариф</span>
+                  <div className="flex gap-2 items-start">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center text-xs font-bold">▲</span>
+                    <span className="font-medium pt-0.5">Нет публичной страницы с ценами API — возможно, скрытый enterprise-тариф</span>
                   </div>
-                  <div className="flex gap-2">
-                    <span className="text-emerald-500 shrink-0">●</span>
-                    <span>Используют Cloudflare CDN, средний ответ сервера 240ms</span>
+                  <div className="flex gap-2 items-start">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center text-xs font-bold">●</span>
+                    <span className="font-medium pt-0.5">Используют Cloudflare CDN, средний ответ сервера 240ms</span>
                   </div>
-                  <div className="flex gap-2">
-                    <span className="text-blue-500 shrink-0">◆</span>
-                    <span>Блог обновляется 3 раза в неделю, фокус на SEO-контент</span>
+                  <div className="flex gap-2 items-start">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold">◆</span>
+                    <span className="font-medium pt-0.5">Блог обновляется 3 раза в неделю, фокус на SEO-контент</span>
                   </div>
-                  <div className="flex gap-2">
-                    <span className="text-amber-500 shrink-0">▲</span>
-                    <span>Мобильная версия: CLS 0.18 — нестабильная вёрстка при загрузке</span>
+                  <div className="flex gap-2 items-start">
+                    <span className="shrink-0 w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center text-xs font-bold">▲</span>
+                    <span className="font-medium pt-0.5">Мобильная версия: CLS 0.18 — нестабильная вёрстка при загрузке</span>
                   </div>
                 </div>
               </div>
@@ -262,14 +276,35 @@ export default function LandingPage() {
               <div>
                 <h4 className="text-sm font-semibold mb-3">Стек технологий</h4>
                 <div className="flex flex-wrap gap-1.5">
-                  {["React", "Node.js", "Go", "PostgreSQL", "Redis", "Cloudflare", "Kubernetes", "Kafka", "Elasticsearch"].map((t) => (
-                    <span key={t} className="px-2 py-0.5 bg-slate-100 rounded text-xs text-muted-foreground">
-                      {t}
+                  {([
+                    { name: "React", bg: "bg-blue-50", text: "text-blue-600" },
+                    { name: "Node.js", bg: "bg-green-50", text: "text-green-600" },
+                    { name: "Go", bg: "bg-cyan-50", text: "text-cyan-600" },
+                    { name: "PostgreSQL", bg: "bg-indigo-50", text: "text-indigo-600" },
+                    { name: "Redis", bg: "bg-red-50", text: "text-red-600" },
+                    { name: "Cloudflare", bg: "bg-orange-50", text: "text-orange-600" },
+                    { name: "Kubernetes", bg: "bg-blue-50", text: "text-blue-700" },
+                    { name: "Kafka", bg: "bg-gray-100", text: "text-gray-700" },
+                    { name: "Elasticsearch", bg: "bg-yellow-50", text: "text-yellow-700" },
+                  ] as const).map((t) => (
+                    <span key={t.name} className={`px-2.5 py-0.5 ${t.bg} rounded text-xs font-medium ${t.text}`}>
+                      {t.name}
                     </span>
                   ))}
                 </div>
               </div>
             </div>
+          </motion.div>
+
+          {/* Try it link */}
+          <div className="text-center mt-6">
+            <a
+              href="#"
+              onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Попробуйте сами — вставьте URL конкурента ↑
+            </a>
           </div>
         </div>
       </section>
