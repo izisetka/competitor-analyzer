@@ -66,14 +66,14 @@ const features = [
 ];
 
 const companies = [
-  { text: "Notion", icon: Globe },
-  { text: "Slack", icon: Zap },
-  { text: "Figma", icon: Target },
-  { text: "Linear", icon: TrendingUp },
-  { text: "Vercel", icon: Globe },
-  { text: "Stripe", icon: Zap },
-  { text: "GitHub", icon: Target },
-  { text: "Shopify", icon: TrendingUp },
+  { text: "Wildberries", icon: Globe },
+  { text: "Ozon", icon: Zap },
+  { text: "Тинькофф", icon: Target },
+  { text: "Яндекс", icon: TrendingUp },
+  { text: "Авито", icon: Globe },
+  { text: "Сбер", icon: Zap },
+  { text: "ВКонтакте", icon: Target },
+  { text: "Lamoda", icon: TrendingUp },
 ];
 
 export default function LandingPage() {
@@ -86,7 +86,7 @@ export default function LandingPage() {
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
             CA
           </div>
-          <span className="font-semibold text-lg">CompetitorAI</span>
+          <span className="font-semibold text-lg text-foreground">CompetitorAI</span>
         </div>
         <Link href="/analyze">
           <ShimmerButton className="h-9 px-4" shimmerSize="0.05em">
@@ -112,11 +112,11 @@ export default function LandingPage() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
         >
-          <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
             Анализ конкурентов
           </span>
           <br />
-          <span className="text-white">за 60 секунд</span>
+          <span className="text-foreground">за 60 секунд</span>
         </motion.h1>
 
         <motion.p
@@ -159,10 +159,10 @@ export default function LandingPage() {
           {companies.map((t, i) => (
             <div
               key={i}
-              className="flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card/50 backdrop-blur-sm mx-2"
+              className="flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card shadow-sm mx-2"
             >
               <t.icon className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium">{t.text}</span>
+              <span className="text-sm font-medium text-foreground">{t.text}</span>
             </div>
           ))}
         </Marquee>
@@ -175,7 +175,7 @@ export default function LandingPage() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl font-bold text-center mb-4">
+          <h2 className="text-3xl font-bold text-center mb-4 text-foreground">
             Всё что нужно для анализа
           </h2>
           <p className="text-center text-muted-foreground mb-12">
@@ -191,7 +191,7 @@ export default function LandingPage() {
       </section>
 
       <section className="relative z-10 max-w-4xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">Как это работает</h2>
+        <h2 className="text-3xl font-bold text-center mb-12 text-foreground">Как это работает</h2>
         <div className="grid md:grid-cols-3 gap-8">
           {[
             { step: "01", title: "Введите URL", desc: "Вставьте ссылку на сайт конкурента" },
@@ -209,7 +209,7 @@ export default function LandingPage() {
               <div className="text-5xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mb-4">
                 {item.step}
               </div>
-              <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+              <h3 className="text-xl font-semibold mb-2 text-foreground">{item.title}</h3>
               <p className="text-muted-foreground">{item.desc}</p>
             </motion.div>
           ))}
@@ -217,7 +217,7 @@ export default function LandingPage() {
       </section>
 
       <section className="relative z-10 max-w-3xl mx-auto px-6 py-20 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6">
+        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
           Готовы узнать всё о конкуренте?
         </h2>
         <Link href="/analyze">

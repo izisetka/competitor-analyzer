@@ -113,7 +113,7 @@ export default function AnalyzePage() {
                   <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                   <Input
                     type="text"
-                    placeholder="notion.com"
+                    placeholder="wildberries.ru"
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && handleAnalyze()}
@@ -133,7 +133,7 @@ export default function AnalyzePage() {
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="text-red-400 text-sm mt-3 text-center"
+                  className="text-red-500 text-sm mt-3 text-center"
                 >
                   {error}
                 </motion.p>
@@ -142,7 +142,7 @@ export default function AnalyzePage() {
               <div className="mt-8 text-center">
                 <p className="text-sm text-muted-foreground mb-3">Попробуйте:</p>
                 <div className="flex flex-wrap justify-center gap-2">
-                  {["notion.com", "slack.com", "figma.com", "linear.app"].map((example) => (
+                  {["wildberries.ru", "ozon.ru", "tinkoff.ru", "yandex.ru"].map((example) => (
                     <button
                       key={example}
                       onClick={() => setUrl(example)}

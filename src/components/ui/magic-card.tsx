@@ -59,7 +59,7 @@ export function MagicCard(props: MagicCardProps) {
     children,
     className,
     gradientSize = 200,
-    gradientColor = "#262626",
+    gradientColor = "#E2E8F0",
     gradientOpacity = 0.8,
     gradientFrom = "#9E7AFF",
     gradientTo = "#FE8BBB",
