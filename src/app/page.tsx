@@ -124,6 +124,14 @@ function UrlInput({
         </div>
       </div>
 
+      <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 mt-3 text-xs text-slate-400">
+        {["Сайт", "Цены", "Соцсети", "Отзывы", "SEO", "Рекомендации"].map((item) => (
+          <span key={item}>
+            <span className="text-indigo-500">✓</span> {item}
+          </span>
+        ))}
+      </div>
+
       <div className="flex flex-wrap justify-center gap-2 mt-4">
         {placeholderDomains.map((example) => (
           <button
@@ -218,9 +226,9 @@ export default function LandingPage() {
       <section className="relative z-10 flex flex-col items-center text-center px-6 pt-20 pb-16 max-w-4xl mx-auto">
         <BlurFadeIn delay={0}>
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-4 py-1.5">
-            <span className="text-sm">🔍</span>
+            <span className="text-sm">⚡</span>
             <span className="text-sm font-medium text-indigo-700">
-              Бесплатный анализ конкурентов
+              Результат за 2 минуты
             </span>
           </div>
         </BlurFadeIn>
@@ -282,94 +290,8 @@ export default function LandingPage() {
         <div className="h-px bg-gradient-to-r from-transparent via-indigo-300/50 to-transparent" />
       </div>
 
-      {/* How it works — 3 steps */}
-      <section className="relative z-10 max-w-4xl mx-auto px-6 py-20">
-        <div className="text-center mb-12">
-          <BlurFadeIn delay={0.1}>
-            <AnimatedGradientText
-              speed={1.5}
-              colorFrom="#6366f1"
-              colorTo="#8b5cf6"
-              className="text-3xl md:text-4xl font-bold tracking-tight mb-3"
-            >
-              Как это работает
-            </AnimatedGradientText>
-          </BlurFadeIn>
-          <BlurFadeIn delay={0.2}>
-            <p className="text-slate-500 max-w-lg mx-auto">
-              Три простых шага — и у вас полный разбор конкурента
-            </p>
-          </BlurFadeIn>
-        </div>
-
-        <BlurFadeIn delay={0.2}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-            {/* Connecting dashed lines between steps (desktop only) */}
-            <div className="hidden md:block absolute top-12 left-[calc(33.333%-12px)] w-[calc(33.333%+24px)] z-0">
-              <div className="border-t-2 border-dashed border-slate-200 w-full" />
-            </div>
-            <div className="hidden md:block absolute top-12 left-[calc(66.666%-12px)] w-[calc(33.333%+24px)] z-0">
-              <div className="border-t-2 border-dashed border-slate-200 w-full" />
-            </div>
-            {[
-              {
-                step: "1",
-                icon: Link2,
-                title: "Вставьте ссылку",
-                desc: "Скопируйте адрес сайта конкурента и вставьте в поле выше. Это всё, что нужно от вас.",
-                color: "bg-indigo-50 text-indigo-600",
-              },
-              {
-                step: "2",
-                icon: Eye,
-                title: "Мы всё изучим",
-                desc: "Мы посмотрим их сайт, цены, отзывы, соцсети и технологии. Обычно это занимает пару минут.",
-                color: "bg-violet-50 text-violet-600",
-              },
-              {
-                step: "3",
-                icon: FileText,
-                title: "Получите отчёт",
-                desc: "Понятный отчёт с цифрами и советами — что конкурент делает хорошо и где его слабые места.",
-                color: "bg-emerald-50 text-emerald-600",
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={item.step}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="relative z-10 bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300"
-              >
-                <div
-                  className={`w-12 h-12 rounded-2xl ${item.color} flex items-center justify-center mb-4`}
-                >
-                  <item.icon className="w-6 h-6" />
-                </div>
-                <div className="absolute top-6 right-6 text-4xl font-bold text-slate-100">
-                  {item.step}
-                </div>
-                <h3 className="text-lg font-bold mb-2 text-slate-900">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-slate-500 leading-relaxed">
-                  {item.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </BlurFadeIn>
-      </section>
-
-      {/* Gradient divider */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6">
-        <div className="h-px bg-gradient-to-r from-transparent via-indigo-300/50 to-transparent" />
-      </div>
-
       {/* Report preview */}
-      <section className="relative z-10 py-20 bg-slate-50/50">
+      <section className="relative z-10 py-12 bg-slate-50/50">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-10">
             <WordFadeIn
@@ -599,6 +521,92 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Gradient divider */}
+      <div className="relative z-10 max-w-4xl mx-auto px-6">
+        <div className="h-px bg-gradient-to-r from-transparent via-indigo-300/50 to-transparent" />
+      </div>
+
+      {/* How it works — 3 steps */}
+      <section className="relative z-10 max-w-4xl mx-auto px-6 py-12">
+        <div className="text-center mb-12">
+          <BlurFadeIn delay={0.1}>
+            <AnimatedGradientText
+              speed={1.5}
+              colorFrom="#6366f1"
+              colorTo="#8b5cf6"
+              className="text-3xl md:text-4xl font-bold tracking-tight mb-3"
+            >
+              Как это работает
+            </AnimatedGradientText>
+          </BlurFadeIn>
+          <BlurFadeIn delay={0.2}>
+            <p className="text-slate-500 max-w-lg mx-auto">
+              Три простых шага — и у вас полный разбор конкурента
+            </p>
+          </BlurFadeIn>
+        </div>
+
+        <BlurFadeIn delay={0.2}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch relative">
+            {/* Connecting dashed lines between steps (desktop only) */}
+            <div className="hidden md:block absolute top-12 left-[calc(33.333%-12px)] w-[calc(33.333%+24px)] z-0">
+              <div className="border-t-2 border-dashed border-slate-200 w-full" />
+            </div>
+            <div className="hidden md:block absolute top-12 left-[calc(66.666%-12px)] w-[calc(33.333%+24px)] z-0">
+              <div className="border-t-2 border-dashed border-slate-200 w-full" />
+            </div>
+            {[
+              {
+                step: "1",
+                icon: Link2,
+                title: "Вставьте ссылку",
+                desc: "Скопируйте адрес сайта конкурента и вставьте в поле выше. Это всё, что нужно от вас.",
+                color: "bg-indigo-50 text-indigo-600",
+              },
+              {
+                step: "2",
+                icon: Eye,
+                title: "Мы всё изучим",
+                desc: "Мы посмотрим их сайт, цены, отзывы, соцсети и технологии. Обычно это занимает пару минут.",
+                color: "bg-violet-50 text-violet-600",
+              },
+              {
+                step: "3",
+                icon: FileText,
+                title: "Получите отчёт",
+                desc: "Понятный отчёт с цифрами и советами — что конкурент делает хорошо и где его слабые места.",
+                color: "bg-emerald-50 text-emerald-600",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={item.step}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                whileHover={{ y: -4 }}
+                className="relative z-10 bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col"
+              >
+                <div
+                  className={`w-12 h-12 rounded-2xl ${item.color} flex items-center justify-center mb-4`}
+                >
+                  <item.icon className="w-6 h-6" />
+                </div>
+                <div className="absolute top-6 right-6 text-4xl font-bold text-slate-100">
+                  {item.step}
+                </div>
+                <h3 className="text-lg font-bold mb-2 text-slate-900">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-slate-500 leading-relaxed flex-1">
+                  {item.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </BlurFadeIn>
+      </section>
+
       {/* What we analyze — Marquee */}
       <section className="relative z-10 py-12 overflow-hidden">
         <div className="text-center mb-6">
@@ -672,7 +680,7 @@ export default function LandingPage() {
         </div>
 
         <BlurFadeIn delay={0.2}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {useCases.map((uc, i) => (
               <motion.div
                 key={uc.title}
@@ -680,9 +688,10 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="h-full"
               >
                 <MagicCard
-                  className="rounded-2xl p-6 border border-slate-100 shadow-sm cursor-default"
+                  className="rounded-2xl p-6 border border-slate-100 shadow-sm cursor-default h-full flex flex-col"
                   gradientColor="#E2E8F0"
                   gradientOpacity={0.5}
                   gradientFrom="#6366f1"
@@ -695,7 +704,7 @@ export default function LandingPage() {
                   <p className="text-sm text-indigo-600 font-medium mb-3 italic">
                     «{uc.quote}»
                   </p>
-                  <p className="text-sm text-slate-500 leading-relaxed">
+                  <p className="text-sm text-slate-500 leading-relaxed flex-1">
                     {uc.description}
                   </p>
                 </MagicCard>
@@ -710,10 +719,10 @@ export default function LandingPage() {
         <div className="max-w-2xl mx-auto text-center px-6">
           <BlurFadeIn delay={0.1}>
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Первый анализ — бесплатно
+              Готовы узнать больше о конкурентах?
             </h2>
             <p className="text-indigo-100 text-lg mb-8">
-              Просто вставьте ссылку и убедитесь сами. Без регистрации, без карты.
+              Вставьте ссылку на сайт конкурента — отчёт будет готов через пару минут
             </p>
             <ShineBorder
               shineColor={["#ffffff", "#c7d2fe", "#ffffff"]}
@@ -727,7 +736,7 @@ export default function LandingPage() {
                 }
                 className="inline-flex items-center gap-2 h-12 px-8 rounded-xl bg-white text-indigo-600 font-semibold text-sm shadow-lg hover:shadow-xl transition-shadow"
               >
-                Попробовать бесплатно
+                Попробовать
                 <ArrowRight className="w-4 h-4" />
               </button>
             </ShineBorder>
