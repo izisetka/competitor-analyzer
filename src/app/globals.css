@@ -51,13 +51,8 @@
   --animate-shine: shine var(--duration) infinite linear;
   --animate-marquee: marquee var(--duration) infinite linear;
   --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-  --animate-mesh: mesh-move 20s ease-in-out infinite;
-  --animate-mesh-2: mesh-move-2 25s ease-in-out infinite;
-  --animate-mesh-3: mesh-move-3 30s ease-in-out infinite;
   --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
   --animate-radar: radar-spin 2s linear infinite;
-  --animate-typing: typing 3.5s steps(30) infinite, blink 0.75s step-end infinite;
-  --animate-count-up: count-up 1.5s ease-out forwards;
   --animate-float: float 6s ease-in-out infinite;
   @keyframes shimmer-slide {
   to {
@@ -110,24 +105,6 @@
     transform: translateY(calc(-100% - var(--gap)));
     }
   }
-  @keyframes mesh-move {
-    0%, 100% { transform: translate(0%, 0%) scale(1); }
-    25% { transform: translate(5%, 15%) scale(1.1); }
-    50% { transform: translate(-5%, 5%) scale(0.95); }
-    75% { transform: translate(10%, -5%) scale(1.05); }
-  }
-  @keyframes mesh-move-2 {
-    0%, 100% { transform: translate(0%, 0%) scale(1); }
-    25% { transform: translate(-10%, 5%) scale(1.05); }
-    50% { transform: translate(5%, -10%) scale(1.1); }
-    75% { transform: translate(-5%, 10%) scale(0.95); }
-  }
-  @keyframes mesh-move-3 {
-    0%, 100% { transform: translate(0%, 0%) scale(1.05); }
-    25% { transform: translate(8%, -8%) scale(0.95); }
-    50% { transform: translate(-8%, 12%) scale(1.1); }
-    75% { transform: translate(5%, 5%) scale(1); }
-  }
   @keyframes pulse-glow {
     0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
     50% { opacity: 0.8; box-shadow: 0 0 20px 10px rgba(99, 102, 241, 0.1); }
@@ -135,14 +112,6 @@
   @keyframes radar-spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
-  }
-  @keyframes typing {
-    0%, 100% { width: 0; }
-    50%, 80% { width: 100%; }
-  }
-  @keyframes blink {
-    from, to { border-color: transparent; }
-    50% { border-color: currentColor; }
   }
   @keyframes float {
     0%, 100% { transform: translateY(0px); }
@@ -199,84 +168,6 @@
   }
 }
 
-.dark {
-  --background: #09090b;
-  --foreground: #fafafa;
-  --card: rgba(24, 24, 27, 0.7);
-  --card-foreground: #fafafa;
-  --popover: #18181b;
-  --popover-foreground: #fafafa;
-  --primary: #818cf8;
-  --primary-foreground: #09090b;
-  --secondary: #1e1b4b;
-  --secondary-foreground: #e0e7ff;
-  --muted: #27272a;
-  --muted-foreground: #a1a1aa;
-  --accent: #a78bfa;
-  --accent-foreground: #09090b;
-  --destructive: #f87171;
-  --border: rgba(63, 63, 70, 0.5);
-  --input: rgba(63, 63, 70, 0.6);
-  --ring: #818cf8;
-  --chart-1: #818cf8;
-  --chart-2: #a78bfa;
-  --chart-3: #34d399;
-  --chart-4: #fbbf24;
-  --chart-5: #f87171;
-  --sidebar: #09090b;
-  --sidebar-foreground: #fafafa;
-  --sidebar-primary: #818cf8;
-  --sidebar-primary-foreground: #09090b;
-  --sidebar-accent: #1e1b4b;
-  --sidebar-accent-foreground: #e0e7ff;
-  --sidebar-border: rgba(63, 63, 70, 0.5);
-  --sidebar-ring: #818cf8;
-}
-
-/* Glass morphism utility */
-.glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-}
-
-.glass-strong {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border: 1px solid rgba(148, 163, 184, 0.15);
-}
-
-/* Mesh gradient background */
-.mesh-gradient {
-  position: relative;
-  overflow: hidden;
-}
-
-.mesh-gradient::before {
-  content: '';
-  position: absolute;
-  inset: -50%;
-  background:
-    radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.04) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(236, 72, 153, 0.025) 0%, transparent 50%);
-  animation: mesh-move 20s ease-in-out infinite;
-  z-index: 0;
-}
-
-.mesh-gradient::after {
-  content: '';
-  position: absolute;
-  inset: -50%;
-  background:
-    radial-gradient(circle at 60% 30%, rgba(236, 72, 153, 0.025) 0%, transparent 45%),
-    radial-gradient(circle at 30% 70%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
-  animation: mesh-move-2 25s ease-in-out infinite;
-  z-index: 0;
-}
-
 /* Card hover */
 .tilt-card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -290,11 +181,6 @@
 .gauge-circle {
   transform: rotate(-90deg);
   transform-origin: center;
-}
-
-/* Solid accent text */
-.gradient-text {
-  color: #1E293B;
 }
 
 /* Radar animation */

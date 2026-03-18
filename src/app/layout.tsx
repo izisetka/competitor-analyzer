@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Competitor Analyzer — Анализ конкурентов",
-  description: "AI-powered анализ конкурентов за 60 секунд",
+  title: "КонкурентАнализ — Узнайте, чем конкурент лучше вас",
+  description: "Вставьте ссылку на сайт конкурента — получите понятный отчёт с советами за 2 минуты",
 };
 
 export default function RootLayout({
