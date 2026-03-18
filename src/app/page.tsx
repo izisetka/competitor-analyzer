@@ -20,6 +20,7 @@ import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
 import { NumberTicker } from "@/components/ui/number-ticker";
 import { Marquee } from "@/components/ui/marquee";
 import { BlurFadeIn } from "@/components/ui/blur-fade-in";
+import { WordFadeIn } from "@/components/ui/word-fade-in";
 
 const placeholderDomains = [
   "wildberries.ru",
@@ -203,17 +204,18 @@ export default function LandingPage() {
           </div>
         </BlurFadeIn>
 
-        <BlurFadeIn delay={0.1}>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
-            <span className="bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent">
-              Узнай всё о конкуренте
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent">
-              за 60 секунд
-            </span>
-          </h1>
-        </BlurFadeIn>
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
+          <WordFadeIn
+            words="Узнай всё о конкуренте"
+            delay={0.08}
+            className="bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent"
+          />
+          <WordFadeIn
+            words="за 60 секунд"
+            delay={0.08}
+            className="bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent mt-1"
+          />
+        </h1>
 
         <BlurFadeIn delay={0.2}>
           <p className="text-lg md:text-xl text-zinc-400 max-w-xl mb-10 leading-relaxed">
@@ -319,16 +321,18 @@ export default function LandingPage() {
 
       {/* Features — BentoGrid */}
       <section className="relative z-10 max-w-5xl mx-auto px-6 py-16">
-        <BlurFadeIn delay={0.1}>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-2 text-center">
-            <span className="bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
-              Что внутри отчёта
-            </span>
-          </h2>
-          <p className="text-zinc-400 text-center mb-10 max-w-lg mx-auto">
-            Каждый анализ — это глубокое исследование, а не поверхностный скан
-          </p>
-        </BlurFadeIn>
+        <div className="text-center mb-10">
+          <WordFadeIn
+            words="Что внутри отчёта"
+            delay={0.08}
+            className="text-3xl md:text-4xl font-bold tracking-tight mb-2 bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent"
+          />
+          <BlurFadeIn delay={0.2}>
+            <p className="text-zinc-400 max-w-lg mx-auto">
+              Каждый анализ — это глубокое исследование, а не поверхностный скан
+            </p>
+          </BlurFadeIn>
+        </div>
 
         <BlurFadeIn delay={0.2}>
           <BentoGrid className="auto-rows-[18rem] grid-cols-3">
@@ -342,16 +346,18 @@ export default function LandingPage() {
       {/* Report screenshot */}
       <section className="relative z-10 py-20">
         <div className="max-w-4xl mx-auto px-6">
-          <BlurFadeIn delay={0.1}>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-2 text-center">
-              <span className="bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">
-                Пример отчёта
-              </span>
-            </h2>
-            <p className="text-zinc-400 text-center mb-10">
-              Так выглядит результат анализа wildberries.ru
-            </p>
-          </BlurFadeIn>
+          <div className="text-center mb-10">
+            <WordFadeIn
+              words="Пример отчёта"
+              delay={0.08}
+              className="text-3xl md:text-4xl font-bold tracking-tight mb-2 bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent"
+            />
+            <BlurFadeIn delay={0.2}>
+              <p className="text-zinc-400">
+                Так выглядит результат анализа wildberries.ru
+              </p>
+            </BlurFadeIn>
+          </div>
 
           <BlurFadeIn delay={0.2}>
             <motion.div
@@ -564,11 +570,11 @@ export default function LandingPage() {
       <section className="relative z-10 py-20 px-6">
         <BlurFadeIn delay={0.1}>
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-              <span className="bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent">
-                Готовы узнать о конкурентах больше?
-              </span>
-            </h2>
+            <WordFadeIn
+              words="Готовы узнать о конкурентах больше?"
+              delay={0.06}
+              className="text-3xl md:text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent"
+            />
             <p className="text-zinc-400 mb-8">
               Вставьте URL — получите полный отчёт через 2 минуты
             </p>
