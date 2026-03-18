@@ -17,6 +17,13 @@ import { motion } from "framer-motion";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { BlurFadeIn } from "@/components/ui/blur-fade-in";
 import { WordFadeIn } from "@/components/ui/word-fade-in";
+import { DotPattern } from "@/components/ui/dot-pattern";
+import { BorderBeam } from "@/components/ui/border-beam";
+import { MagicCard } from "@/components/ui/magic-card";
+import { NumberTicker } from "@/components/ui/number-ticker";
+import { ShineBorder } from "@/components/ui/shine-border";
+import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
+import { Marquee } from "@/components/ui/marquee";
 
 const placeholderDomains = [
   "wildberries.ru",
@@ -182,10 +189,11 @@ export default function LandingPage() {
 
   return (
     <div className="relative min-h-screen bg-white text-slate-900">
-      {/* Subtle background gradient */}
+      {/* Subtle background gradient + dot pattern */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div className="absolute -top-1/2 left-1/2 h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-indigo-100/50 blur-[120px]" />
         <div className="absolute top-1/4 -right-1/4 h-[600px] w-[600px] rounded-full bg-violet-100/40 blur-[120px]" />
+        <DotPattern className="opacity-30 [mask-image:radial-gradient(ellipse_at_center,white_30%,transparent_70%)]" />
       </div>
 
       {/* Nav */}
@@ -248,14 +256,45 @@ export default function LandingPage() {
         </BlurFadeIn>
       </section>
 
+      {/* Mini stats */}
+      <section className="relative z-10 max-w-3xl mx-auto px-6 py-10">
+        <BlurFadeIn delay={0.4}>
+          <div className="flex items-center justify-center gap-8 md:gap-16">
+            {[
+              { value: 2, suffix: " мин", label: "среднее время анализа" },
+              { value: 50, suffix: "+ страниц", label: "изучаем на сайте" },
+              { value: 7, suffix: " разделов", label: "в каждом отчёте" },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <div className="text-2xl md:text-3xl font-bold text-slate-900">
+                  <NumberTicker value={stat.value} delay={0.3} />
+                  <span>{stat.suffix}</span>
+                </div>
+                <p className="text-xs md:text-sm text-slate-400 mt-1">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </BlurFadeIn>
+      </section>
+
+      {/* Gradient divider */}
+      <div className="relative z-10 max-w-4xl mx-auto px-6">
+        <div className="h-px bg-gradient-to-r from-transparent via-indigo-300/50 to-transparent" />
+      </div>
+
       {/* How it works — 3 steps */}
       <section className="relative z-10 max-w-4xl mx-auto px-6 py-20">
         <div className="text-center mb-12">
-          <WordFadeIn
-            words="Как это работает"
-            delay={0.08}
-            className="text-3xl md:text-4xl font-bold tracking-tight mb-3 text-slate-900"
-          />
+          <BlurFadeIn delay={0.1}>
+            <AnimatedGradientText
+              speed={1.5}
+              colorFrom="#6366f1"
+              colorTo="#8b5cf6"
+              className="text-3xl md:text-4xl font-bold tracking-tight mb-3"
+            >
+              Как это работает
+            </AnimatedGradientText>
+          </BlurFadeIn>
           <BlurFadeIn delay={0.2}>
             <p className="text-slate-500 max-w-lg mx-auto">
               Три простых шага — и у вас полный разбор конкурента
@@ -264,7 +303,14 @@ export default function LandingPage() {
         </div>
 
         <BlurFadeIn delay={0.2}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+            {/* Connecting dashed lines between steps (desktop only) */}
+            <div className="hidden md:block absolute top-12 left-[calc(33.333%-12px)] w-[calc(33.333%+24px)] z-0">
+              <div className="border-t-2 border-dashed border-slate-200 w-full" />
+            </div>
+            <div className="hidden md:block absolute top-12 left-[calc(66.666%-12px)] w-[calc(33.333%+24px)] z-0">
+              <div className="border-t-2 border-dashed border-slate-200 w-full" />
+            </div>
             {[
               {
                 step: "1",
@@ -294,7 +340,8 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="relative bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow"
+                whileHover={{ y: -4 }}
+                className="relative z-10 bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300"
               >
                 <div
                   className={`w-12 h-12 rounded-2xl ${item.color} flex items-center justify-center mb-4`}
@@ -315,6 +362,11 @@ export default function LandingPage() {
           </div>
         </BlurFadeIn>
       </section>
+
+      {/* Gradient divider */}
+      <div className="relative z-10 max-w-4xl mx-auto px-6">
+        <div className="h-px bg-gradient-to-r from-transparent via-indigo-300/50 to-transparent" />
+      </div>
 
       {/* Report preview */}
       <section className="relative z-10 py-20 bg-slate-50/50">
@@ -338,8 +390,9 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300"
+              className="relative rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300"
             >
+              <BorderBeam size={120} duration={8} colorFrom="#6366f1" colorTo="#8b5cf6" />
               {/* Title bar */}
               <div className="flex items-center gap-2 px-4 py-3 bg-slate-50 border-b border-slate-100">
                 <div className="flex gap-1.5">
@@ -546,6 +599,63 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* What we analyze — Marquee */}
+      <section className="relative z-10 py-12 overflow-hidden">
+        <div className="text-center mb-6">
+          <BlurFadeIn delay={0.1}>
+            <p className="text-sm font-medium text-slate-400 uppercase tracking-wider">
+              Что мы анализируем
+            </p>
+          </BlurFadeIn>
+        </div>
+        <Marquee pauseOnHover className="[--duration:30s] [--gap:1rem]">
+          {[
+            "Цены и тарифы",
+            "SEO-оценка",
+            "Соцсети",
+            "Отзывы клиентов",
+            "Стек технологий",
+            "Скорость сайта",
+            "Контент-стратегия",
+            "SWOT-анализ",
+            "Рекомендации",
+          ].map((item) => (
+            <div
+              key={item}
+              className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-600 shadow-sm hover:border-indigo-200 hover:text-indigo-600 transition-colors"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+              {item}
+            </div>
+          ))}
+        </Marquee>
+        <Marquee reverse pauseOnHover className="[--duration:35s] [--gap:1rem] mt-3">
+          {[
+            "Позиционирование",
+            "Структура сайта",
+            "UX/UI разбор",
+            "Мобильная версия",
+            "Трафик и каналы",
+            "Email-маркетинг",
+            "Уникальные фичи",
+            "Целевая аудитория",
+          ].map((item) => (
+            <div
+              key={item}
+              className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-600 shadow-sm hover:border-violet-200 hover:text-violet-600 transition-colors"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
+              {item}
+            </div>
+          ))}
+        </Marquee>
+      </section>
+
+      {/* Gradient divider */}
+      <div className="relative z-10 max-w-4xl mx-auto px-6">
+        <div className="h-px bg-gradient-to-r from-transparent via-violet-300/50 to-transparent" />
+      </div>
+
       {/* For whom */}
       <section className="relative z-10 max-w-4xl mx-auto px-6 py-20">
         <div className="text-center mb-12">
@@ -570,18 +680,25 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="text-3xl mb-3">{uc.emoji}</div>
-                <h3 className="text-lg font-bold mb-2 text-slate-900">
-                  {uc.title}
-                </h3>
-                <p className="text-sm text-indigo-600 font-medium mb-3 italic">
-                  «{uc.quote}»
-                </p>
-                <p className="text-sm text-slate-500 leading-relaxed">
-                  {uc.description}
-                </p>
+                <MagicCard
+                  className="rounded-2xl p-6 border border-slate-100 shadow-sm cursor-default"
+                  gradientColor="#E2E8F0"
+                  gradientOpacity={0.5}
+                  gradientFrom="#6366f1"
+                  gradientTo="#8b5cf6"
+                >
+                  <div className="text-3xl mb-3">{uc.emoji}</div>
+                  <h3 className="text-lg font-bold mb-2 text-slate-900">
+                    {uc.title}
+                  </h3>
+                  <p className="text-sm text-indigo-600 font-medium mb-3 italic">
+                    «{uc.quote}»
+                  </p>
+                  <p className="text-sm text-slate-500 leading-relaxed">
+                    {uc.description}
+                  </p>
+                </MagicCard>
               </motion.div>
             ))}
           </div>
@@ -598,15 +715,22 @@ export default function LandingPage() {
             <p className="text-indigo-100 text-lg mb-8">
               Просто вставьте ссылку и убедитесь сами. Без регистрации, без карты.
             </p>
-            <button
-              onClick={() =>
-                window.scrollTo({ top: 0, behavior: "smooth" })
-              }
-              className="inline-flex items-center gap-2 h-12 px-8 rounded-xl bg-white text-indigo-600 font-semibold text-sm shadow-lg hover:shadow-xl transition-shadow"
+            <ShineBorder
+              shineColor={["#ffffff", "#c7d2fe", "#ffffff"]}
+              borderWidth={2}
+              duration={8}
+              className="inline-flex rounded-xl"
             >
-              Попробовать бесплатно
-              <ArrowRight className="w-4 h-4" />
-            </button>
+              <button
+                onClick={() =>
+                  window.scrollTo({ top: 0, behavior: "smooth" })
+                }
+                className="inline-flex items-center gap-2 h-12 px-8 rounded-xl bg-white text-indigo-600 font-semibold text-sm shadow-lg hover:shadow-xl transition-shadow"
+              >
+                Попробовать бесплатно
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </ShineBorder>
           </BlurFadeIn>
         </div>
       </section>
