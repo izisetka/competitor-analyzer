@@ -73,24 +73,24 @@ export default function AnalyzePage() {
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden mesh-gradient">
-      {/* Mesh blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-1/4 -right-1/4 w-[500px] h-[500px] rounded-full bg-purple-400/[0.03] blur-3xl animate-[mesh-move-2_25s_ease-in-out_infinite]" />
-        <div className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-blue-400/[0.03] blur-3xl animate-[mesh-move_20s_ease-in-out_infinite]" />
+    <div className="dark relative min-h-screen overflow-hidden bg-zinc-950 text-white">
+      {/* Ambient glow */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="absolute -top-1/4 -right-1/4 w-[500px] h-[500px] rounded-full bg-violet-500/[0.05] blur-[120px]" />
+        <div className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-indigo-500/[0.04] blur-[120px]" />
       </div>
 
       <nav className="relative z-10 flex items-center justify-between px-6 py-5 max-w-7xl mx-auto">
-        <Link href="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+        <Link href="/" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
           <ArrowLeft className="w-4 h-4" />
           <span className="text-sm font-medium">На главную</span>
         </Link>
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-indigo-500/25">
+        <Link href="/" className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-xs shadow-lg shadow-indigo-500/25">
             CA
           </div>
-          <span className="font-bold text-xl tracking-tight">CompetitorAI</span>
-        </div>
+          <span className="font-bold text-lg tracking-tight text-white">CompetitorAI</span>
+        </Link>
       </nav>
 
       <div className="relative z-10 max-w-2xl mx-auto px-6 pt-16">
@@ -101,9 +101,10 @@ export default function AnalyzePage() {
           className="text-center mb-12"
         >
           <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-            <span className="gradient-text">Анализ</span> конкурента
+            <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">Анализ</span>{" "}
+            <span className="text-white">конкурента</span>
           </h1>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-zinc-400 text-lg">
             Введите URL сайта конкурента для получения полного отчёта
           </p>
         </motion.div>
@@ -117,23 +118,25 @@ export default function AnalyzePage() {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
             >
-              <div className="bg-white rounded-2xl p-3 shadow-lg shadow-slate-200/50 border border-slate-100">
-                <div className="flex flex-col sm:flex-row gap-2">
+              <div className="rounded-2xl p-2.5 bg-zinc-900 border border-zinc-800 shadow-2xl shadow-black/50">
+                <div className="flex flex-col sm:flex-row gap-2.5">
                   <div className="relative flex-1">
-                    <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                    <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
                     <Input
                       type="text"
                       placeholder="wildberries.ru"
                       value={url}
                       onChange={(e) => setUrl(e.target.value)}
                       onKeyDown={(e) => e.key === "Enter" && handleAnalyze()}
-                      className="pl-12 h-14 bg-white/50 border-0 text-lg rounded-xl focus-visible:ring-2 focus-visible:ring-indigo-500/30"
+                      className="pl-12 h-14 bg-zinc-800/50 border-zinc-700 text-lg text-white rounded-xl focus-visible:ring-2 focus-visible:ring-indigo-500/50 placeholder:text-zinc-600"
                     />
                   </div>
                   <ShimmerButton
-                    className="h-14 px-8 rounded-xl"
-                    shimmerSize="0.05em"
                     onClick={handleAnalyze}
+                    shimmerColor="rgba(255,255,255,0.15)"
+                    background="linear-gradient(135deg, #6366f1, #8b5cf6)"
+                    borderRadius="12px"
+                    className="h-14 px-8 text-sm font-semibold"
                   >
                     <span className="font-semibold flex items-center gap-2">
                       Анализировать
@@ -147,20 +150,20 @@ export default function AnalyzePage() {
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="text-red-500 text-sm mt-3 text-center"
+                  className="text-red-400 text-sm mt-3 text-center"
                 >
                   {error}
                 </motion.p>
               )}
 
               <div className="mt-8 text-center">
-                <p className="text-sm text-muted-foreground mb-3">Попробуйте:</p>
+                <p className="text-sm text-zinc-500 mb-3">Попробуйте:</p>
                 <div className="flex flex-wrap justify-center gap-2">
                   {["wildberries.ru", "ozon.ru", "tbank.ru", "yandex.ru"].map((example) => (
                     <button
                       key={example}
                       onClick={() => setUrl(example)}
-                      className="px-4 py-2 rounded-full text-sm font-medium text-muted-foreground glass hover:text-foreground hover:shadow-md transition-all duration-200"
+                      className="px-4 py-2 rounded-full text-sm font-medium text-zinc-500 hover:text-white hover:bg-zinc-800 border border-transparent hover:border-zinc-700 transition-all duration-200"
                     >
                       {example}
                     </button>
@@ -177,30 +180,26 @@ export default function AnalyzePage() {
               transition={{ duration: 0.5 }}
               className="space-y-8"
             >
-              {/* Radar / Scanning animation */}
+              {/* Radar animation */}
               <div className="flex justify-center mb-6">
                 <div className="relative w-32 h-32">
-                  {/* Outer ring */}
-                  <div className="absolute inset-0 rounded-full border-2 border-indigo-200/50" />
-                  <div className="absolute inset-3 rounded-full border border-indigo-200/30" />
-                  <div className="absolute inset-6 rounded-full border border-indigo-200/20" />
-                  {/* Radar sweep */}
+                  <div className="absolute inset-0 rounded-full border-2 border-indigo-500/20" />
+                  <div className="absolute inset-3 rounded-full border border-indigo-500/15" />
+                  <div className="absolute inset-6 rounded-full border border-indigo-500/10" />
                   <div className="absolute inset-0 radar-sweep">
                     <div className="absolute top-1/2 left-1/2 w-1/2 h-0.5 origin-left bg-gradient-to-r from-indigo-500 to-transparent rounded-full" />
                   </div>
-                  {/* Center dot */}
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-indigo-500 animate-pulse shadow-lg shadow-indigo-500/50" />
-                  {/* Pulsing rings */}
-                  <div className="absolute inset-0 rounded-full border-2 border-indigo-500/20 animate-ping" style={{ animationDuration: "2s" }} />
+                  <div className="absolute inset-0 rounded-full border-2 border-indigo-500/10 animate-ping" style={{ animationDuration: "2s" }} />
                 </div>
               </div>
 
-              <p className="text-center text-sm text-muted-foreground mb-2">
-                Анализируем <span className="font-semibold text-foreground">{url}</span>
+              <p className="text-center text-sm text-zinc-400 mb-2">
+                Анализируем <span className="font-semibold text-white">{url}</span>
               </p>
 
               {/* Steps */}
-              <div className="glass-strong rounded-2xl p-6 space-y-1">
+              <div className="rounded-2xl p-6 space-y-1 bg-zinc-900/80 border border-zinc-800">
                 {steps.map((step, i) => {
                   const isActive = i === currentStep;
                   const isDone = i < currentStep;
@@ -214,7 +213,7 @@ export default function AnalyzePage() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.15, duration: 0.4 }}
                       className={`flex items-center gap-4 p-4 rounded-xl transition-all duration-300 ${
-                        isActive ? "bg-indigo-50/80" : ""
+                        isActive ? "bg-indigo-500/10" : ""
                       }`}
                     >
                       <div
@@ -222,8 +221,8 @@ export default function AnalyzePage() {
                           isDone
                             ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/25"
                             : isActive
-                            ? "bg-gradient-to-br from-indigo-500 to-purple-500 text-white shadow-lg shadow-indigo-500/25 animate-pulse"
-                            : "bg-gray-100 text-gray-400"
+                            ? "bg-gradient-to-br from-indigo-500 to-violet-500 text-white shadow-lg shadow-indigo-500/25 animate-pulse"
+                            : "bg-zinc-800 text-zinc-500"
                         }`}
                       >
                         {isDone ? (
@@ -236,24 +235,24 @@ export default function AnalyzePage() {
                       <div className="flex-1 min-w-0">
                         <p
                           className={`font-semibold text-sm transition-colors ${
-                            isPending ? "text-muted-foreground" : "text-foreground"
+                            isPending ? "text-zinc-500" : "text-white"
                           }`}
                         >
                           {step.label}
                         </p>
-                        <p className="text-xs text-muted-foreground">{step.sublabel}</p>
+                        <p className="text-xs text-zinc-500">{step.sublabel}</p>
                       </div>
 
                       {isActive && (
                         <div className="flex gap-1">
-                          <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce" style={{ animationDelay: "0ms" }} />
-                          <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce" style={{ animationDelay: "150ms" }} />
-                          <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-bounce" style={{ animationDelay: "300ms" }} />
+                          <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-bounce" style={{ animationDelay: "0ms" }} />
+                          <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-bounce" style={{ animationDelay: "150ms" }} />
+                          <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-bounce" style={{ animationDelay: "300ms" }} />
                         </div>
                       )}
 
                       {isDone && (
-                        <span className="text-xs font-medium text-emerald-600">Готово</span>
+                        <span className="text-xs font-medium text-emerald-400">Готово</span>
                       )}
                     </motion.div>
                   );
@@ -261,10 +260,10 @@ export default function AnalyzePage() {
               </div>
 
               {/* Progress bar */}
-              <div className="glass-strong rounded-full p-1">
-                <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
+              <div className="rounded-full p-1 bg-zinc-900 border border-zinc-800">
+                <div className="h-2 rounded-full bg-zinc-800 overflow-hidden">
                   <motion.div
-                    className="h-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+                    className="h-full rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-purple-500"
                     initial={{ width: "0%" }}
                     animate={{ width: `${steps[currentStep].progress}%` }}
                     transition={{ duration: 0.8, ease: "easeInOut" }}

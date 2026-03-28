@@ -3,10 +3,31 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
-import { Globe, ArrowRight } from "lucide-react";
+import {
+  Globe,
+  ArrowRight,
+  Search,
+  BarChart3,
+  Zap,
+  Shield,
+  Code2,
+  TrendingUp,
+} from "lucide-react";
 import { motion } from "framer-motion";
+import { AnimatedGradientText } from "@/components/ui/animated-gradient-text";
+import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
+import { NumberTicker } from "@/components/ui/number-ticker";
+import { Marquee } from "@/components/ui/marquee";
+import { BlurFadeIn } from "@/components/ui/blur-fade-in";
+import { WordFadeIn } from "@/components/ui/word-fade-in";
 
-const placeholderDomains = ["wildberries.ru", "ozon.ru", "tbank.ru", "yandex.ru"];
+const placeholderDomains = [
+  "wildberries.ru",
+  "ozon.ru",
+  "tbank.ru",
+  "yandex.ru",
+];
 
 function AnimatedPlaceholder() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -39,10 +60,85 @@ function AnimatedPlaceholder() {
   }, [displayText, isDeleting, currentIndex]);
 
   return (
-    <span className="text-muted-foreground/50 pointer-events-none select-none">
+    <span className="text-zinc-500 pointer-events-none select-none">
       {displayText}
       <span className="animate-pulse">|</span>
     </span>
+  );
+}
+
+const features = [
+  {
+    Icon: Search,
+    name: "Глубокий парсинг",
+    description:
+      "Сканируем главную, цены, блог, о компании — собираем полную картину за секунды",
+    href: "#",
+    cta: "Подробнее",
+    className: "col-span-3 lg:col-span-1",
+    background: (
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-transparent" />
+    ),
+  },
+  {
+    Icon: BarChart3,
+    name: "AI-аналитика",
+    description:
+      "GPT-4 анализирует продукт, позиционирование, сильные и слабые стороны конкурента",
+    href: "#",
+    cta: "Подробнее",
+    className: "col-span-3 lg:col-span-2",
+    background: (
+      <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-transparent to-transparent" />
+    ),
+  },
+  {
+    Icon: Code2,
+    name: "Стек технологий",
+    description:
+      "Определяем фреймворки, CMS, CDN, аналитику — всё, на чём построен сайт",
+    href: "#",
+    cta: "Подробнее",
+    className: "col-span-3 lg:col-span-2",
+    background: (
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-transparent" />
+    ),
+  },
+  {
+    Icon: TrendingUp,
+    name: "SEO-аудит",
+    description:
+      "Мета-теги, скорость загрузки, мобильная версия — находим точки роста",
+    href: "#",
+    cta: "Подробнее",
+    className: "col-span-3 lg:col-span-1",
+    background: (
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-transparent" />
+    ),
+  },
+];
+
+const companies = [
+  "Wildberries",
+  "Ozon",
+  "Яндекс",
+  "Тинькофф",
+  "СберМаркет",
+  "Авито",
+  "Lamoda",
+  "DNS",
+  "М.Видео",
+  "Skillbox",
+];
+
+function CompanyCard({ name }: { name: string }) {
+  return (
+    <div className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900/50 px-5 py-3 backdrop-blur-sm">
+      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-800 text-xs font-bold text-zinc-400">
+        {name.slice(0, 2).toUpperCase()}
+      </div>
+      <span className="text-sm font-medium text-zinc-300">{name}</span>
+    </div>
   );
 }
 
@@ -68,36 +164,73 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="relative min-h-screen bg-white">
+    <div className="dark relative min-h-screen bg-zinc-950 text-white">
+      {/* Ambient glow */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="absolute -top-1/2 left-1/2 h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-indigo-500/[0.07] blur-[120px]" />
+        <div className="absolute top-1/4 -right-1/4 h-[600px] w-[600px] rounded-full bg-violet-500/[0.05] blur-[120px]" />
+      </div>
+
       {/* Nav */}
-      <nav className="flex items-center justify-between px-6 py-5 max-w-4xl mx-auto">
+      <nav className="relative z-10 flex items-center justify-between px-6 py-5 max-w-5xl mx-auto">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center text-white font-bold text-xs">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-xs shadow-lg shadow-indigo-500/25">
             CA
           </div>
-          <span className="font-bold text-lg tracking-tight text-foreground">CompetitorAI</span>
+          <span className="font-bold text-lg tracking-tight text-white">
+            CompetitorAI
+          </span>
         </div>
-        <a href="/analyze" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+        <a
+          href="/analyze"
+          className="text-sm text-zinc-400 hover:text-white transition-colors"
+        >
           Анализ →
         </a>
       </nav>
 
-      {/* Hero — generous whitespace */}
-      <section className="flex flex-col items-center text-center px-6 pt-24 pb-20 max-w-3xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 leading-[1.15]">
-          Вставьте ссылку —<br />узнайте всё о конкуренте
+      {/* Hero */}
+      <section className="relative z-10 flex flex-col items-center text-center px-6 pt-20 pb-16 max-w-4xl mx-auto">
+        <BlurFadeIn delay={0}>
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/80 px-4 py-1.5 backdrop-blur-sm">
+            <span className="text-sm">🔍</span>
+            <AnimatedGradientText
+              className="text-sm font-medium"
+              colorFrom="#818cf8"
+              colorTo="#c084fc"
+            >
+              AI-Powered Analysis
+            </AnimatedGradientText>
+          </div>
+        </BlurFadeIn>
+
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
+          <WordFadeIn
+            words="Узнай всё о конкуренте"
+            delay={0.08}
+            className="bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent"
+          />
+          <WordFadeIn
+            words="за 60 секунд"
+            delay={0.08}
+            className="bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent mt-1"
+          />
         </h1>
 
-        <p className="text-lg text-muted-foreground max-w-lg mb-10">
-          Парсим сайт, анализируем продукт, цены и технологии.
-        </p>
+        <BlurFadeIn delay={0.2}>
+          <p className="text-lg md:text-xl text-zinc-400 max-w-xl mb-10 leading-relaxed">
+            Парсим сайт, анализируем продукт, цены и технологии.
+            <br className="hidden md:block" />
+            Полный отчёт — быстрее, чем заварить кофе.
+          </p>
+        </BlurFadeIn>
 
-        {/* URL Input — primary accent */}
-        <div className="w-full max-w-xl">
-          <div className="relative bg-white rounded-xl p-2.5 shadow-md border border-slate-200">
+        {/* URL Input */}
+        <BlurFadeIn delay={0.3} className="w-full max-w-xl">
+          <div className="relative rounded-2xl p-2.5 bg-zinc-900 border border-zinc-800 shadow-2xl shadow-black/50">
             <div className="flex flex-col sm:flex-row gap-2.5">
               <div className="relative flex-1">
-                <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground z-10" />
+                <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 z-10" />
                 {!url && (
                   <div className="absolute left-11 top-1/2 -translate-y-1/2 text-base z-[1]">
                     <AnimatedPlaceholder />
@@ -109,13 +242,16 @@ export default function LandingPage() {
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-                  className="pl-11 h-12 bg-transparent border-0 text-base rounded-lg focus-visible:ring-2 focus-visible:ring-slate-300 relative z-[2]"
+                  className="pl-11 h-12 bg-zinc-800/50 border-zinc-700 text-base text-white rounded-xl focus-visible:ring-2 focus-visible:ring-indigo-500/50 relative z-[2] placeholder:text-zinc-600"
                 />
               </div>
-              <button
-                className="h-12 px-8 rounded-lg bg-foreground hover:bg-foreground/90 text-white font-medium flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+              <ShimmerButton
                 onClick={handleSubmit}
                 disabled={isSubmitting}
+                shimmerColor="rgba(255,255,255,0.15)"
+                background="linear-gradient(135deg, #6366f1, #8b5cf6)"
+                borderRadius="12px"
+                className="h-12 px-8 text-sm font-semibold"
               >
                 {isSubmitting ? (
                   <>
@@ -125,10 +261,10 @@ export default function LandingPage() {
                 ) : (
                   <>
                     Анализировать
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-4 h-4 ml-2" />
                   </>
                 )}
-              </button>
+              </ShimmerButton>
             </div>
           </div>
 
@@ -137,171 +273,273 @@ export default function LandingPage() {
               <button
                 key={example}
                 onClick={() => setUrl(example)}
-                className="px-3 py-1 rounded-full text-sm text-muted-foreground hover:text-foreground hover:bg-slate-100 transition-all"
+                className="px-3 py-1 rounded-full text-sm text-zinc-500 hover:text-white hover:bg-zinc-800 transition-all border border-transparent hover:border-zinc-700"
               >
                 {example}
               </button>
             ))}
           </div>
-        </div>
+        </BlurFadeIn>
       </section>
 
-      {/* How it works — asymmetric layout, no cards, emoji */}
-      <section className="max-w-3xl mx-auto px-6 py-12">
-        <h2 className="text-2xl font-bold tracking-tight mb-8">
-          Как это работает
-        </h2>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Step 01 — large, takes full left column */}
-          <div className="md:row-span-2 flex flex-col justify-center">
-            <span className="text-5xl mb-4">🔍</span>
-            <span className="font-mono text-xs text-muted-foreground mb-1">01</span>
-            <h3 className="text-xl font-semibold mb-2">Вставьте URL</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
-              Скопируйте ссылку на сайт конкурента и вставьте в поле выше. Подойдёт любая страница — мы найдём остальное сами.
-            </p>
+      {/* Stats */}
+      <section className="relative z-10 max-w-4xl mx-auto px-6 py-16">
+        <BlurFadeIn delay={0.1}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            {[
+              {
+                value: 500,
+                suffix: "+",
+                label: "компаний проанализировано",
+                icon: BarChart3,
+              },
+              {
+                value: 10,
+                suffix: "+",
+                label: "источников данных",
+                icon: Shield,
+              },
+              {
+                value: 2,
+                suffix: "",
+                label: "минуты на отчёт",
+                icon: Zap,
+              },
+            ].map((stat) => (
+              <div key={stat.label} className="flex flex-col items-center gap-2">
+                <stat.icon className="w-5 h-5 text-indigo-400 mb-1" />
+                <div className="text-4xl md:text-5xl font-bold tracking-tight text-white">
+                  <NumberTicker value={stat.value} className="text-white" />
+                  <span className="text-indigo-400">{stat.suffix}</span>
+                </div>
+                <span className="text-sm text-zinc-400">{stat.label}</span>
+              </div>
+            ))}
           </div>
-
-          {/* Step 02 — top right */}
-          <div>
-            <span className="text-3xl mb-3 block">🤖</span>
-            <span className="font-mono text-xs text-muted-foreground mb-1 block">02</span>
-            <h3 className="text-lg font-semibold mb-1">Мы сканируем</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Парсим главную, цены, о компании и блог
-            </p>
-          </div>
-
-          {/* Step 03 — bottom right */}
-          <div>
-            <span className="text-3xl mb-3 block">📊</span>
-            <span className="font-mono text-xs text-muted-foreground mb-1 block">03</span>
-            <h3 className="text-lg font-semibold mb-1">Читаете отчёт</h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Продукт, цены, SEO, стек и слабые места
-            </p>
-          </div>
-        </div>
+        </BlurFadeIn>
       </section>
 
-      {/* Report screenshot — full-width, edge-to-edge, dramatic */}
-      <section className="py-20 bg-slate-50">
+      {/* Features — BentoGrid */}
+      <section className="relative z-10 max-w-5xl mx-auto px-6 py-16">
+        <div className="text-center mb-10">
+          <WordFadeIn
+            words="Что внутри отчёта"
+            delay={0.08}
+            className="text-3xl md:text-4xl font-bold tracking-tight mb-2 bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent"
+          />
+          <BlurFadeIn delay={0.2}>
+            <p className="text-zinc-400 max-w-lg mx-auto">
+              Каждый анализ — это глубокое исследование, а не поверхностный скан
+            </p>
+          </BlurFadeIn>
+        </div>
+
+        <BlurFadeIn delay={0.2}>
+          <BentoGrid className="auto-rows-[18rem] grid-cols-3">
+            {features.map((feature) => (
+              <BentoCard key={feature.name} {...feature} />
+            ))}
+          </BentoGrid>
+        </BlurFadeIn>
+      </section>
+
+      {/* Report screenshot */}
+      <section className="relative z-10 py-20">
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-2xl font-bold tracking-tight mb-2 text-left">Пример отчёта</h2>
-          <p className="text-muted-foreground text-sm mb-8">Так выглядит результат анализа wildberries.ru</p>
+          <div className="text-center mb-10">
+            <WordFadeIn
+              words="Пример отчёта"
+              delay={0.08}
+              className="text-3xl md:text-4xl font-bold tracking-tight mb-2 bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent"
+            />
+            <BlurFadeIn delay={0.2}>
+              <p className="text-zinc-400">
+                Так выглядит результат анализа wildberries.ru
+              </p>
+            </BlurFadeIn>
+          </div>
 
-          {/* Browser chrome mockup */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="rounded-xl border border-slate-200 bg-white shadow-xl overflow-hidden hover:scale-[1.01] transition-transform duration-300"
-          >
-            {/* Title bar */}
-            <div className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-slate-800 to-slate-600 border-b border-slate-700">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-400" />
-                <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                <div className="w-3 h-3 rounded-full bg-green-400" />
-              </div>
-              <div className="flex-1 mx-2">
-                <div className="bg-white/10 backdrop-blur rounded-md px-3 py-1 text-xs text-slate-300 border border-white/10 max-w-sm">
-                  competitorai.ru/report/wildberries-ru
+          <BlurFadeIn delay={0.2}>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="rounded-2xl border border-zinc-800 bg-zinc-900/80 shadow-2xl shadow-black/50 overflow-hidden backdrop-blur-sm hover:border-zinc-700 transition-colors duration-300"
+            >
+              {/* Title bar */}
+              <div className="flex items-center gap-2 px-4 py-3 bg-zinc-900 border-b border-zinc-800">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-green-500/80" />
                 </div>
-              </div>
-            </div>
-
-            {/* Report content mockup */}
-            <div className="p-6 md:p-8 space-y-6">
-              {/* Header */}
-              <div className="flex items-start justify-between flex-wrap gap-4">
-                <div>
-                  <h3 className="text-xl font-bold">wildberries.ru</h3>
-                  <p className="text-sm text-muted-foreground mt-1">Маркетплейс · E-commerce · Россия</p>
-                </div>
-                <span className="text-xs font-mono bg-slate-100 px-2.5 py-1 rounded text-muted-foreground">анализ от 17.03.2026</span>
-              </div>
-
-              <hr className="border-slate-100" />
-
-              {/* Scores row */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  { label: "Технологии", value: "23", sub: "React, Node.js, Go", bg: "bg-blue-50", border: "border-l-[3px] border-blue-400", color: "text-blue-600" },
-                  { label: "Страницы", value: "148", sub: "проиндексировано", bg: "bg-green-50", border: "border-l-[3px] border-green-400", color: "text-green-600" },
-                  { label: "SEO-оценка", value: "72/100", sub: "12 без описания", bg: "bg-purple-50", border: "border-l-[3px] border-purple-400", color: "text-purple-600" },
-                  { label: "Скорость", value: "1.8s", sub: "LCP мобильный", bg: "bg-amber-50", border: "border-l-[3px] border-amber-400", color: "text-amber-600" },
-                ].map((m, i) => (
-                  <motion.div
-                    key={m.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.1, ease: "easeOut" }}
-                    className={`${m.bg} ${m.border} rounded-lg p-3`}
-                  >
-                    <p className={`text-3xl font-bold tracking-tight ${m.color}`}>{m.value}</p>
-                    <p className="text-xs font-medium mt-0.5">{m.label}</p>
-                    <p className="text-xs text-muted-foreground">{m.sub}</p>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Findings */}
-              <div>
-                <h4 className="text-sm font-semibold mb-3">Ключевые находки</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex gap-2 items-start">
-                    <span className="shrink-0 w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center text-xs font-bold">▲</span>
-                    <span className="font-medium pt-0.5">Нет публичной страницы с ценами API — возможно, скрытый enterprise-тариф</span>
-                  </div>
-                  <div className="flex gap-2 items-start">
-                    <span className="shrink-0 w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center text-xs font-bold">●</span>
-                    <span className="font-medium pt-0.5">Используют Cloudflare CDN, средний ответ сервера 240ms</span>
-                  </div>
-                  <div className="flex gap-2 items-start">
-                    <span className="shrink-0 w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center text-xs font-bold">◆</span>
-                    <span className="font-medium pt-0.5">Блог обновляется 3 раза в неделю, фокус на SEO-контент</span>
-                  </div>
-                  <div className="flex gap-2 items-start">
-                    <span className="shrink-0 w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center text-xs font-bold">▲</span>
-                    <span className="font-medium pt-0.5">Мобильная версия: CLS 0.18 — нестабильная вёрстка при загрузке</span>
+                <div className="flex-1 mx-2">
+                  <div className="bg-zinc-800 rounded-md px-3 py-1 text-xs text-zinc-400 border border-zinc-700 max-w-sm">
+                    competitorai.ru/report/wildberries-ru
                   </div>
                 </div>
               </div>
 
-              {/* Tech stack snippet */}
-              <div>
-                <h4 className="text-sm font-semibold mb-3">Стек технологий</h4>
-                <div className="flex flex-wrap gap-1.5">
-                  {([
-                    { name: "React", bg: "bg-blue-50", text: "text-blue-600" },
-                    { name: "Node.js", bg: "bg-green-50", text: "text-green-600" },
-                    { name: "Go", bg: "bg-cyan-50", text: "text-cyan-600" },
-                    { name: "PostgreSQL", bg: "bg-indigo-50", text: "text-indigo-600" },
-                    { name: "Redis", bg: "bg-red-50", text: "text-red-600" },
-                    { name: "Cloudflare", bg: "bg-orange-50", text: "text-orange-600" },
-                    { name: "Kubernetes", bg: "bg-blue-50", text: "text-blue-700" },
-                    { name: "Kafka", bg: "bg-gray-100", text: "text-gray-700" },
-                    { name: "Elasticsearch", bg: "bg-yellow-50", text: "text-yellow-700" },
-                  ] as const).map((t) => (
-                    <span key={t.name} className={`px-2.5 py-0.5 ${t.bg} rounded text-xs font-medium ${t.text}`}>
-                      {t.name}
-                    </span>
+              {/* Report content */}
+              <div className="p-6 md:p-8 space-y-6">
+                <div className="flex items-start justify-between flex-wrap gap-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-white">
+                      wildberries.ru
+                    </h3>
+                    <p className="text-sm text-zinc-400 mt-1">
+                      Маркетплейс · E-commerce · Россия
+                    </p>
+                  </div>
+                  <span className="text-xs font-mono bg-zinc-800 px-2.5 py-1 rounded text-zinc-400 border border-zinc-700">
+                    анализ от 17.03.2026
+                  </span>
+                </div>
+
+                <hr className="border-zinc-800" />
+
+                {/* Scores */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    {
+                      label: "Технологии",
+                      value: "23",
+                      sub: "React, Node.js, Go",
+                      color: "text-blue-400",
+                      border: "border-l-[3px] border-blue-500",
+                      bg: "bg-blue-500/10",
+                    },
+                    {
+                      label: "Страницы",
+                      value: "148",
+                      sub: "проиндексировано",
+                      color: "text-green-400",
+                      border: "border-l-[3px] border-green-500",
+                      bg: "bg-green-500/10",
+                    },
+                    {
+                      label: "SEO-оценка",
+                      value: "72/100",
+                      sub: "12 без описания",
+                      color: "text-purple-400",
+                      border: "border-l-[3px] border-purple-500",
+                      bg: "bg-purple-500/10",
+                    },
+                    {
+                      label: "Скорость",
+                      value: "1.8s",
+                      sub: "LCP мобильный",
+                      color: "text-amber-400",
+                      border: "border-l-[3px] border-amber-500",
+                      bg: "bg-amber-500/10",
+                    },
+                  ].map((m, i) => (
+                    <motion.div
+                      key={m.label}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 0.4,
+                        delay: i * 0.1,
+                        ease: "easeOut",
+                      }}
+                      className={`${m.bg} ${m.border} rounded-lg p-3`}
+                    >
+                      <p
+                        className={`text-3xl font-bold tracking-tight ${m.color}`}
+                      >
+                        {m.value}
+                      </p>
+                      <p className="text-xs font-medium mt-0.5 text-zinc-300">
+                        {m.label}
+                      </p>
+                      <p className="text-xs text-zinc-500">{m.sub}</p>
+                    </motion.div>
                   ))}
                 </div>
-              </div>
-            </div>
-          </motion.div>
 
-          {/* Try it link */}
+                {/* Findings */}
+                <div>
+                  <h4 className="text-sm font-semibold mb-3 text-zinc-200">
+                    Ключевые находки
+                  </h4>
+                  <div className="space-y-2 text-sm">
+                    {[
+                      {
+                        icon: "▲",
+                        bg: "bg-orange-500",
+                        text: "Нет публичной страницы с ценами API — возможно, скрытый enterprise-тариф",
+                      },
+                      {
+                        icon: "●",
+                        bg: "bg-green-500",
+                        text: "Используют Cloudflare CDN, средний ответ сервера 240ms",
+                      },
+                      {
+                        icon: "◆",
+                        bg: "bg-blue-500",
+                        text: "Блог обновляется 3 раза в неделю, фокус на SEO-контент",
+                      },
+                      {
+                        icon: "▲",
+                        bg: "bg-orange-500",
+                        text: "Мобильная версия: CLS 0.18 — нестабильная вёрстка при загрузке",
+                      },
+                    ].map((f, i) => (
+                      <div key={i} className="flex gap-2 items-start">
+                        <span
+                          className={`shrink-0 w-6 h-6 rounded-full ${f.bg} text-white flex items-center justify-center text-xs font-bold`}
+                        >
+                          {f.icon}
+                        </span>
+                        <span className="font-medium pt-0.5 text-zinc-300">
+                          {f.text}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tech stack */}
+                <div>
+                  <h4 className="text-sm font-semibold mb-3 text-zinc-200">
+                    Стек технологий
+                  </h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {[
+                      { name: "React", color: "text-blue-400 bg-blue-500/10 border-blue-500/20" },
+                      { name: "Node.js", color: "text-green-400 bg-green-500/10 border-green-500/20" },
+                      { name: "Go", color: "text-cyan-400 bg-cyan-500/10 border-cyan-500/20" },
+                      { name: "PostgreSQL", color: "text-indigo-400 bg-indigo-500/10 border-indigo-500/20" },
+                      { name: "Redis", color: "text-red-400 bg-red-500/10 border-red-500/20" },
+                      { name: "Cloudflare", color: "text-orange-400 bg-orange-500/10 border-orange-500/20" },
+                      { name: "Kubernetes", color: "text-blue-400 bg-blue-500/10 border-blue-500/20" },
+                      { name: "Kafka", color: "text-zinc-400 bg-zinc-500/10 border-zinc-500/20" },
+                      { name: "Elasticsearch", color: "text-yellow-400 bg-yellow-500/10 border-yellow-500/20" },
+                    ].map((t) => (
+                      <span
+                        key={t.name}
+                        className={`px-2.5 py-0.5 rounded border text-xs font-medium ${t.color}`}
+                      >
+                        {t.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </BlurFadeIn>
+
           <div className="text-center mt-6">
             <a
               href="#"
-              onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="text-sm text-zinc-500 hover:text-white transition-colors"
             >
               Попробуйте сами — вставьте URL конкурента ↑
             </a>
@@ -309,10 +547,70 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer — one line */}
-      <footer className="py-6 px-6">
-        <p className="text-center text-sm text-muted-foreground">
-          CompetitorAI · <a href="https://t.me/competitorai" className="hover:text-foreground transition-colors">Telegram</a> · <a href="mailto:hello@competitorai.ru" className="hover:text-foreground transition-colors">Обратная связь</a>
+      {/* Marquee — companies */}
+      <section className="relative z-10 py-16 overflow-hidden">
+        <BlurFadeIn delay={0.1}>
+          <p className="text-center text-sm text-zinc-500 mb-6 uppercase tracking-widest">
+            Уже анализируют
+          </p>
+          <Marquee pauseOnHover className="[--duration:30s]">
+            {companies.map((name) => (
+              <CompanyCard key={name} name={name} />
+            ))}
+          </Marquee>
+          <Marquee pauseOnHover reverse className="mt-3 [--duration:30s]">
+            {[...companies].reverse().map((name) => (
+              <CompanyCard key={name} name={name} />
+            ))}
+          </Marquee>
+        </BlurFadeIn>
+      </section>
+
+      {/* Final CTA */}
+      <section className="relative z-10 py-20 px-6">
+        <BlurFadeIn delay={0.1}>
+          <div className="max-w-2xl mx-auto text-center">
+            <WordFadeIn
+              words="Готовы узнать о конкурентах больше?"
+              delay={0.06}
+              className="text-3xl md:text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent"
+            />
+            <p className="text-zinc-400 mb-8">
+              Вставьте URL — получите полный отчёт через 2 минуты
+            </p>
+            <ShimmerButton
+              onClick={() =>
+                window.scrollTo({ top: 0, behavior: "smooth" })
+              }
+              shimmerColor="rgba(255,255,255,0.15)"
+              background="linear-gradient(135deg, #6366f1, #8b5cf6)"
+              borderRadius="12px"
+              className="h-12 px-10 text-sm font-semibold mx-auto"
+            >
+              Начать анализ
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </ShimmerButton>
+          </div>
+        </BlurFadeIn>
+      </section>
+
+      {/* Footer */}
+      <footer className="relative z-10 py-8 px-6 border-t border-zinc-800/50">
+        <p className="text-center text-sm text-zinc-500">
+          CompetitorAI ·{" "}
+          <a
+            href="https://t.me/competitorai"
+            className="hover:text-white transition-colors"
+          >
+            Telegram
+          </a>{" "}
+          ·{" "}
+          <a
+            href="mailto:hello@competitorai.ru"
+            className="hover:text-white transition-colors"
+          >
+            Обратная связь
+          </a>
         </p>
       </footer>
     </div>
